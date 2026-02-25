@@ -1,0 +1,93 @@
+//
+//  ProductListViewController.swift
+//  iOSTraining
+//
+//  Created by Cedrick Agtong - INTERN on 2/25/26.
+//
+
+import UIKit
+
+class ProductListViewController: UIViewController {
+    @IBOutlet weak var tableView: UITableView!
+    
+    private let cellIdentifier = "ProductListTableViewCell"
+    var products: [Product] = [
+        Product(image: "monitor", name: "Computer Monitor", price: 2000),
+        Product(image: "keyboard", name: "Keyboard", price: 1000),
+        Product(image: "tshirt", name: "T-Shirt", price: 500),
+        Product(image: "headphone", name: "Headphone", price: 3000),
+        Product(image: "earbuds", name: "Wireless Earbuds", price: 1500)
+    ]
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.title = "Products"
+        
+        let sortBarButtonItem = UIBarButtonItem(title: "Sort A-Z", style: .plain, target: self, action: #selector(didTapSort)
+    )
+        let nib = UINib(nibName: cellIdentifier, bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: "ProductListTableViewCell")
+        
+        tableView.dataSource = self
+        tableView.delegate = self
+        
+        // Modern cell height configuration
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 104
+        tableView.separatorStyle = .none // Remove separators for card style
+        tableView.backgroundColor = .systemGroupedBackground
+        
+        // Do any additional setup after loading the view.
+        
+    }
+    @objc func didTapSort() {
+        print(#function)
+    }
+
+//    @IBAction func didTapDismiss(_ sender: Any) {
+//        self.dismiss(animated: true)
+//    }
+//    
+//    @IBAction func didTapGoBack(_ sender: Any) {
+//        self.navigationController?.popViewController(animated: true)
+//    }
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
+    }
+    */
+
+}
+extension ProductListViewController: UITableViewDelegate, UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return products.count
+        
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) as? ProductListTableViewCell {
+            cell.product = products[indexPath.row]
+            return cell
+        }
+        
+        return UITableViewCell()
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("YOU TAPPED PRODUCT INDEX \(indexPath.row)")
+        
+        let productDetailVC = ProductDetailViewController()
+        self.navigationController?.pushViewController(productDetailVC, animated: true) // navigation per product
+    }
+    
+    
+    
+}
