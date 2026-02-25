@@ -24,7 +24,7 @@
                         </constraints>
                     </imageView>
                     <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ahW-Io-It9">
-                        <rect key="frame" x="100" y="10" width="200" height="40.666666666666664"/>
+                        <rect key="frame" x="100" y="10" width="200" height="61"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ol2-UR-cQT">
                                 <rect key="frame" x="0.0" y="0.0" width="200" height="20.333333333333332"/>
@@ -34,6 +34,12 @@
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ATJ-1D-lyy">
                                 <rect key="frame" x="0.0" y="20.333333333333336" width="200" height="20.333333333333336"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L2x-O7-uma">
+                                <rect key="frame" x="0.0" y="40.666666666666671" width="200" height="20.333333333333329"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -52,6 +58,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="productDescription" destination="L2x-O7-uma" id="JWy-tL-2J9"/>
                 <outlet property="productImageView" destination="M25-wo-teU" id="uWj-om-oQn"/>
                 <outlet property="productNameLabel" destination="ol2-UR-cQT" id="G4n-9x-Ppo"/>
                 <outlet property="productPriceLabel" destination="ATJ-1D-lyy" id="vyA-SF-Hwr"/>

@@ -12,14 +12,14 @@ class ProductListViewController: UIViewController {
     
     private let cellIdentifier = "ProductListTableViewCell"
     var products: [Product] = [
-        Product(image: "monitor", name: "Computer Monitor", price: 2000),
-        Product(image: "keyboard", name: "Keyboard", price: 1000),
-        Product(image: "tshirt", name: "T-Shirt", price: 500),
-        Product(image: "headphone", name: "Headphone", price: 3000),
-        Product(image: "earbuds", name: "Wireless Earbuds", price: 1500),
-        Product(image: "tshirt", name: "T-Shirt", price: 500),
-        Product(image: "headphone", name: "Headphone", price: 3000),
-        Product(image: "earbuds", name: "Wireless Earbuds", price: 1500)
+        Product(image: "monitor", name: "Computer Monitor", price: 2000, description: "High-resolution display with stunning color accuracy and wide viewing angles"),
+        Product(image: "keyboard", name: "Keyboard", price: 1000, description: "Mechanical keyboard with RGB lighting and customizable keys"),
+        Product(image: "tshirt", name: "T-Shirt", price: 500, description: "Premium cotton fabric with comfortable fit and modern design"),
+        Product(image: "headphone", name: "Headphone", price: 3000, description: "Noise-cancelling headphones with premium sound quality"),
+        Product(image: "earbuds", name: "Wireless Earbuds", price: 1500, description: "True wireless earbuds with long battery life and crystal clear audio"),
+        Product(image: "tshirt", name: "T-Shirt", price: 500, description: "Premium cotton fabric with comfortable fit and modern design"),
+        Product(image: "headphone", name: "Headphone", price: 3000, description: "Noise-cancelling headphones with premium sound quality"),
+        Product(image: "earbuds", name: "Wireless Earbuds", price: 1500, description: "True wireless earbuds with long battery life and crystal clear audio")
         
     ]
     
@@ -94,3 +94,4 @@ extension ProductListViewController: UITableViewDelegate, UITableViewDataSource 
     
     
 }
+
