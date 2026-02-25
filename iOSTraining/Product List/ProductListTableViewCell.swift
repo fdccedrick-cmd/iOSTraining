@@ -11,7 +11,8 @@ class ProductListTableViewCell: UITableViewCell {
     @IBOutlet weak var productImageView: UIImageView!
     @IBOutlet weak var productNameLabel: UILabel!
     @IBOutlet weak var productPriceLabel: UILabel!
-    @IBOutlet weak var containerView: UIView!
+    
+    private var isUISetup = false
     
     var product: Product? {
         didSet {
@@ -23,17 +24,28 @@ class ProductListTableViewCell: UITableViewCell {
         self.accessoryType = .disclosureIndicator // pang arrow
         self.selectionStyle = .none // Remove selection highlight for cleaner look
         self.backgroundColor = .clear // Transparent background for card effect
-        setupUI()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        if !isUISetup {
+            setupUI()
+            isUISetup = true
+        }
     }
     
     private func setupUI() {
-        // Card-style container
-        containerView.layer.cornerRadius = 12
-        containerView.layer.shadowColor = UIColor.black.cgColor
-        containerView.layer.shadowOpacity = 0.1
-        containerView.layer.shadowOffset = CGSize(width: 0, height: 2)
-        containerView.layer.shadowRadius = 4
-        containerView.backgroundColor = .systemBackground
+        guard productImageView != nil, productNameLabel != nil, productPriceLabel != nil else {
+            return
+        }
+        
+        // Card-style container using contentView
+        contentView.layer.cornerRadius = 12
+        contentView.layer.shadowColor = UIColor.black.cgColor
+        contentView.layer.shadowOpacity = 0.1
+        contentView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        contentView.layer.shadowRadius = 4
+        contentView.backgroundColor = .systemBackground
         
         // Image styling
         productImageView.layer.cornerRadius = 8

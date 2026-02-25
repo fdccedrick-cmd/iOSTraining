@@ -16,7 +16,11 @@ class ProductListViewController: UIViewController {
         Product(image: "keyboard", name: "Keyboard", price: 1000),
         Product(image: "tshirt", name: "T-Shirt", price: 500),
         Product(image: "headphone", name: "Headphone", price: 3000),
+        Product(image: "earbuds", name: "Wireless Earbuds", price: 1500),
+        Product(image: "tshirt", name: "T-Shirt", price: 500),
+        Product(image: "headphone", name: "Headphone", price: 3000),
         Product(image: "earbuds", name: "Wireless Earbuds", price: 1500)
+        
     ]
     
     override func viewDidLoad() {
@@ -24,8 +28,7 @@ class ProductListViewController: UIViewController {
         
         self.title = "Products"
         
-        let sortBarButtonItem = UIBarButtonItem(title: "Sort A-Z", style: .plain, target: self, action: #selector(didTapSort)
-    )
+        
         let nib = UINib(nibName: cellIdentifier, bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "ProductListTableViewCell")
         
