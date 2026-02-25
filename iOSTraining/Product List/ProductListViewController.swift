@@ -19,7 +19,7 @@ class ProductListViewController: UIViewController {
         Product(image: "earbuds", name: "Wireless Earbuds", price: 1500, description: "True wireless earbuds with long battery life and crystal clear audio"),
         Product(image: "tshirt", name: "T-Shirt", price: 500, description: "Premium cotton fabric with comfortable fit and modern design"),
         Product(image: "headphone", name: "Headphone", price: 3000, description: "Noise-cancelling headphones with premium sound quality"),
-        Product(image: "earbuds", name: "Wireless Earbuds", price: 1500, description: "True wireless earbuds with long battery life and crystal clear audio")
+//        Product(image: "earbuds", name: "Wireless Earbuds", price: 1500, description: "True wireless earbuds with long battery life and crystal clear audio")
         
     ]
     

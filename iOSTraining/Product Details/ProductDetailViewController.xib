@@ -28,9 +28,7 @@
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ODF-x1-EYW">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="375" id="0Jw-Ax-AFK"/>
                                         <constraint firstAttribute="height" constant="375" id="Ods-iY-Lx3"/>
-                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="375" id="Sfp-K7-BtR"/>
                                     </constraints>
                                 </imageView>
                             </subviews>
