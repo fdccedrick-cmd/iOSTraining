@@ -87,8 +87,15 @@ extension ProductListViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("YOU TAPPED PRODUCT INDEX \(indexPath.row)")
         
+        // Get the selected product
+        let selectedProduct = products[indexPath.row]
+        
+        // Create detail view controller and pass the product
         let productDetailVC = ProductDetailViewController()
-        self.navigationController?.pushViewController(productDetailVC, animated: true) // navigation per product
+        productDetailVC.product = selectedProduct
+        
+        // Navigate to detail view
+        self.navigationController?.pushViewController(productDetailVC, animated: true)
     }
     
     
