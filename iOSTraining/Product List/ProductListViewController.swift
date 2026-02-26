@@ -13,6 +13,9 @@ class ProductListViewController: UIViewController {
     
     @IBOutlet weak var productSearch: UISearchBar!
     
+    var filteredProducts: [Product] = []
+    var isSearching: Bool = false
+    
     private let cellIdentifier = "ProductListTableViewCell"
     var products: [Product] = [
         Product(image: "monitor", name: "Computer Monitor", price: 2000, description: "High-resolution display with stunning color accuracy and wide viewing angles"),
@@ -44,6 +47,7 @@ class ProductListViewController: UIViewController {
         tableView.separatorStyle = .none // Remove separators for card style
         tableView.backgroundColor = .systemGroupedBackground
         
+        productSearch.delegate = self
         // Do any additional setup after loading the view.
         
     }
@@ -74,33 +78,57 @@ extension ProductListViewController: UITableViewDelegate, UITableViewDataSource 
         return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return products.count
-        
+        return isSearching ? filteredProducts.count : products.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) as? ProductListTableViewCell {
-            cell.product = products[indexPath.row]
+            cell.product = isSearching ? filteredProducts[indexPath.row] : products[indexPath.row]
             return cell
         }
-        
         return UITableViewCell()
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("YOU TAPPED PRODUCT INDEX \(indexPath.row)")
-        
-        // Get the selected product
-        let selectedProduct = products[indexPath.row]
-        
-        // Create detail view controller and pass the product
+        let selectedProduct = isSearching ? filteredProducts[indexPath.row] : products[indexPath.row]
         let productDetailVC = ProductDetailViewController()
         productDetailVC.product = selectedProduct
-        
-        // Navigate to detail view
         self.navigationController?.pushViewController(productDetailVC, animated: true)
     }
     
     
+}
+extension ProductListViewController: UISearchBarDelegate {
     
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            isSearching = false
+            filteredProducts = []
+        } else {
+            isSearching = true
+            filteredProducts = products.filter { product in
+                product.name.lowercased().contains(searchText.lowercased())
+            }
+        }
+        tableView.reloadData()
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = ""
+        searchBar.resignFirstResponder()
+        isSearching = false
+        filteredProducts = []
+        tableView.reloadData()
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder() // dismisses keyboard on Search tap
+    }
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(true, animated: true)
+    }
+
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(false, animated: true)
+    }
 }
