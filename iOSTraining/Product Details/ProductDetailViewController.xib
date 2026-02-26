@@ -149,6 +149,7 @@
                                 <constraint firstAttribute="trailing" secondItem="o86-sY-JDa" secondAttribute="trailing" constant="16" id="o17-QZ-JXR"/>
                                 <constraint firstItem="IPv-YK-0y8" firstAttribute="top" secondItem="Xiw-Yb-25B" secondAttribute="bottom" constant="7.3300000000000001" id="p9k-Co-A2m"/>
                                 <constraint firstItem="3j3-kv-4vr" firstAttribute="leading" secondItem="FRJ-6H-2ab" secondAttribute="leading" constant="12" id="rzB-cW-qpx"/>
+                                <constraint firstItem="IPv-YK-0y8" firstAttribute="leading" secondItem="FRJ-6H-2ab" secondAttribute="leading" constant="16" id="u1E-hK-E1J"/>
                                 <constraint firstItem="vDd-GS-fMv" firstAttribute="top" secondItem="Tbz-5E-eFg" secondAttribute="bottom" constant="8" id="v2s-TD-Rf3"/>
                                 <constraint firstAttribute="height" constant="1200" id="zcd-6Y-fxs"/>
                             </constraints>
