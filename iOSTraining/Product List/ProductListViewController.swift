@@ -13,6 +13,10 @@ class ProductListViewController: UIViewController {
     
     @IBOutlet weak var productSearch: UISearchBar!
     
+    
+    
+    @IBOutlet weak var productSort: UIButton!
+    
     var filteredProducts: [Product] = []
     var isSearching: Bool = false
     

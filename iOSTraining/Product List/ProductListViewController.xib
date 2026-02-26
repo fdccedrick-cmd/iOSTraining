@@ -11,6 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProductListViewController" customModule="iOSTraining" customModuleProvider="target">
             <connections>
                 <outlet property="productSearch" destination="LJA-Kg-Ab7" id="G6I-M6-sJl"/>
+                <outlet property="productSort" destination="sEg-jd-VTk" id="w7f-LB-20O"/>
                 <outlet property="tableView" destination="smd-81-yeY" id="i7s-Pm-ov6"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -33,13 +34,23 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="LJA-Kg-Ab7">
-                    <rect key="frame" x="0.0" y="163" width="393" height="44"/>
+                <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search Product here" translatesAutoresizingMaskIntoConstraints="NO" id="LJA-Kg-Ab7">
+                    <rect key="frame" x="0.0" y="163" width="313" height="44"/>
+                    <color key="barTintColor" systemColor="systemMintColor"/>
                     <textInputTraits key="textInputTraits"/>
                     <connections>
                         <outlet property="delegate" destination="-1" id="usb-Qk-0AY"/>
                     </connections>
                 </searchBar>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sEg-jd-VTk">
+                    <rect key="frame" x="313" y="159" width="72" height="44"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="tintColor" red="0.92156862750000001" green="0.92156862750000001" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="tinted" image="arrow.up.arrow.down.circle.fill" catalog="system" cornerStyle="dynamic">
+                        <color key="baseBackgroundColor" systemColor="systemMintColor"/>
+                    </buttonConfiguration>
+                </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemMintColor"/>
@@ -50,8 +61,8 @@
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="SpW-4Y-O6R" secondAttribute="trailing" constant="288" id="LRw-Tg-Chc"/>
                 <constraint firstItem="smd-81-yeY" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="Suh-hr-KfI"/>
                 <constraint firstItem="smd-81-yeY" firstAttribute="top" secondItem="LJA-Kg-Ab7" secondAttribute="bottom" constant="11" id="WxQ-lx-zhc"/>
+                <constraint firstAttribute="trailing" secondItem="LJA-Kg-Ab7" secondAttribute="trailing" constant="80" id="ZIA-v9-kH8"/>
                 <constraint firstItem="smd-81-yeY" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="f0i-GH-HaR"/>
-                <constraint firstItem="LJA-Kg-Ab7" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="iEV-e8-zbK"/>
                 <constraint firstItem="smd-81-yeY" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="100" id="sz3-C1-hZp"/>
                 <constraint firstItem="LJA-Kg-Ab7" firstAttribute="top" secondItem="SpW-4Y-O6R" secondAttribute="bottom" constant="22" id="uqW-DR-9VC"/>
                 <constraint firstItem="smd-81-yeY" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="y6e-6D-tjv"/>
@@ -61,6 +72,7 @@
         </view>
     </objects>
     <resources>
+        <image name="arrow.up.arrow.down.circle.fill" catalog="system" width="128" height="123"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
