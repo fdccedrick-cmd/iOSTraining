@@ -11,6 +11,14 @@ class MainTabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Tab bar background color
+            tabBar.barTintColor = UIColor.systemGray6
+            tabBar.backgroundColor = UIColor.systemGray6
+
+            // Optional: item color
+            tabBar.tintColor = .systemBlue              // selected icon
+            tabBar.unselectedItemTintColor = .gray
 
         let productsVC = UINavigationController(rootViewController: ProductListViewController())
         productsVC.tabBarItem = UITabBarItem(title: "Products",
