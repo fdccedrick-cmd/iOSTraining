@@ -15,6 +15,9 @@ class ProductDetailViewController: UIViewController {
     
     @IBOutlet weak var productPrice: UILabel!
     
+
+    @IBOutlet weak var productDescription: UILabel!
+    
     
     // Product property to receive data from ProductListViewController
     var product: Product?
@@ -28,7 +31,7 @@ class ProductDetailViewController: UIViewController {
                 // Display product name and price
                 productName.text = product.name
                 productPrice.text = "₱\(product.price)"
-                
+                productDescription.text = product.description
                 displayProductImage()
             }
         
