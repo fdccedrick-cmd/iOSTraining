@@ -19,6 +19,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         setRootViewController(loginViewController, animated: animated)
     }
+    func showMainApp(animated: Bool = true) {
+        let tabBar = MainTabBarController()
+        setRootViewController(tabBar, animated: animated)
+    }
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }

@@ -70,8 +70,10 @@ class SigninViewController: UIViewController {
 ////        productListVC.modalTransitionStyle = .crossDissolve
 ////        productListVC.modalPresentationStyle = .fullScreen
 ////        self.present(productListVC, animated: true)
-        self.navigationController?.pushViewController(productListVC, animated: true)
-        
+//        self.navigationController?.pushViewController(productListVC, animated: true)
+        if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+            sceneDelegate.showMainApp(animated: true)
+        }
 //        let vc = TestViewController()
 //        self.navigationController?.pushViewController(vc, animated: true)
         
