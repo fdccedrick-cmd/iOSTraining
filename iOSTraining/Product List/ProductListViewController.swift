@@ -64,6 +64,8 @@ class ProductListViewController: UIViewController {
         productSearch.delegate = self
         // Do any additional setup after loading the view.
         setupSortButton()
+        let config = UIImage.SymbolConfiguration(pointSize: 24, weight: .medium)
+        productSort.setPreferredSymbolConfiguration(config, forImageIn: .normal)
         
     }
     @objc func didTapSort() {

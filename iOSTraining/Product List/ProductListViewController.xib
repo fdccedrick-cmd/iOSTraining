@@ -3,6 +3,7 @@
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -47,7 +48,8 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="tintColor" red="0.92156862750000001" green="0.92156862750000001" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <state key="normal" title="Button"/>
-                    <buttonConfiguration key="configuration" style="tinted" image="arrow.up.arrow.down.circle.fill" catalog="system" cornerStyle="dynamic">
+                    <buttonConfiguration key="configuration" style="tinted" cornerStyle="dynamic">
+                        <imageReference key="image" image="arrow.up.arrow.down.circle.fill" catalog="system" symbolScale="large" variableValue="1"/>
                         <color key="baseBackgroundColor" systemColor="systemMintColor"/>
                     </buttonConfiguration>
                 </button>
