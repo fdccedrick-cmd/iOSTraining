@@ -10,23 +10,27 @@ import UIKit
 class ProductDetailViewController: UIViewController {
     @IBOutlet weak var productDetailImage: UIImageView!
     
+    @IBOutlet weak var productName: UILabel!
+    
+    
+    @IBOutlet weak var productPrice: UILabel!
+    
+    
     // Product property to receive data from ProductListViewController
     var product: Product?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Set the navigation title to the product name
         if let product = product {
-            self.title = product.name
-            
-            // You can also use the product data here to populate your detail view
-            displayProductImage()
-            print("Product Details:")
-            print("Name: \(product.name)")
-            print("Price: ₱\(product.price)")
-            print("Description: \(product.description)")
-        }
+                self.title = product.name
+                
+                // Display product name and price
+                productName.text = product.name
+                productPrice.text = "₱\(product.price)"
+                
+                displayProductImage()
+            }
         
         // Do any additional setup after loading the view.
     }
