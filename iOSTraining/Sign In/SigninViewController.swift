@@ -1,3 +1,4 @@
+
 //
 //  ViewController.swift
 //  iOSTraining
@@ -56,18 +57,23 @@ class SigninViewController: UIViewController {
         print(email)
         print(pass)
         
+        
+        
         guard !email.isEmpty, !pass.isEmpty else {
             return
         }
      
         //push - pop
         //Present - dismiss
-    
+//    
         let productListVC = ProductListViewController()
-//        productListVC.modalTransitionStyle = .crossDissolve
-//        productListVC.modalPresentationStyle = .fullScreen
-//        self.present(productListVC, animated: true)
+////        productListVC.modalTransitionStyle = .crossDissolve
+////        productListVC.modalPresentationStyle = .fullScreen
+////        self.present(productListVC, animated: true)
         self.navigationController?.pushViewController(productListVC, animated: true)
+        
+//        let vc = TestViewController()
+//        self.navigationController?.pushViewController(vc, animated: true)
         
     }
 }
