@@ -14,14 +14,22 @@ struct Product {
     let price: Double
     let description: String
     
-    // convenience init — reuses single image 3 times
+    // Original init — single image (backwards compatible)
         init(image: String?, name: String, price: Double, description: String) {
             self.image = image
             self.name = name
             self.price = price
             self.description = description
-            // reuse same image 3x as placeholder carousel
             self.images = [image, image, image].compactMap { $0 }
+        }
+        
+        // New init — multiple images for carousel
+        init(images: [String], name: String, price: Double, description: String) {
+            self.image = images.first
+            self.images = images
+            self.name = name
+            self.price = price
+            self.description = description
         }
     
 }
