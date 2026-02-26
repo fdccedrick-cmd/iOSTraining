@@ -32,7 +32,7 @@ class ProductListTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.accessoryType = .disclosureIndicator
+//        self.accessoryType = .disclosureIndicator
         self.selectionStyle = .none
         self.backgroundColor = .clear
     }

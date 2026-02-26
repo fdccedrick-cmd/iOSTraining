@@ -27,21 +27,9 @@ class ProductListViewController: UIViewController {
         case priceLowToHigh
         case topRated
     }
-    
-    
+
     private var originalProducts: [Product] = []
     private let cellIdentifier = "ProductListTableViewCell"
-//    var products: [Product] = [
-//        Product(image: "monitor", name: "Computer Monitor", price: 2000, description: "This monitor is designed to deliver a smooth and immersive viewing experience with a high-resolution display that produces sharp details and vibrant colors, making it ideal for work, gaming, and entertainment, while its fast refresh rate and low response time reduce motion blur for fluid visuals, and its slim, modern design with adjustable stand ensures comfort during long hours of use, complemented by multiple connectivity options for easy setup with laptops, PCs, and consoles."),
-//        Product(image: "keyboard", name: "Keyboard", price: 1000, description: "Mechanical keyboard with RGB lighting and customizable keys"),
-//        Product(image: "tshirt", name: "T-Shirt", price: 500, description: "Premium cotton fabric with comfortable fit and modern design"),
-//        Product(image: "headphone", name: "Headphone", price: 3000, description: "Noise-cancelling headphones with premium sound quality"),
-//        Product(image: "earbuds", name: "Wireless Earbuds", price: 1500, description: "True wireless earbuds with long battery life and crystal clear audio"),
-//        Product(image: "tshirt", name: "T-Shirt", price: 500, description: "Premium cotton fabric with comfortable fit and modern design"),
-//        Product(image: "headphone", name: "Headphone", price: 3000, description: "Noise-cancelling headphones with premium sound quality"),
-////        Product(image: "earbuds", name: "Wireless Earbuds", price: 1500, description: "True wireless earbuds with long battery life and crystal clear audio")
-//        
-//    ]
     var products: [Product] = [
         Product(
             images: ["monitor", "keyboard", "headphone"],
