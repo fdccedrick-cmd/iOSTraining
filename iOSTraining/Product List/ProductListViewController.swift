@@ -78,7 +78,7 @@ class ProductListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "Products"
+//        self.title = "Products"
         originalProducts = products
         
         let nib = UINib(nibName: cellIdentifier, bundle: nil)
