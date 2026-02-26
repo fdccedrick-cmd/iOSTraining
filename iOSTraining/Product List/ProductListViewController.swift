@@ -37,7 +37,7 @@ class ProductListViewController: UIViewController {
         
         // Modern cell height configuration
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 160
+        tableView.estimatedRowHeight = 180
         tableView.separatorStyle = .none // Remove separators for card style
         tableView.backgroundColor = .systemGroupedBackground
         
