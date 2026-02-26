@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProductListViewController" customModule="iOSTraining" customModuleProvider="target">
             <connections>
+                <outlet property="productSearch" destination="LJA-Kg-Ab7" id="G6I-M6-sJl"/>
                 <outlet property="tableView" destination="smd-81-yeY" id="i7s-Pm-ov6"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -20,24 +21,41 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="smd-81-yeY">
-                    <rect key="frame" x="0.0" y="118" width="393" height="666"/>
+                    <rect key="frame" x="0.0" y="218" width="393" height="634"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="634" id="xzH-jS-VRY"/>
+                    </constraints>
                 </tableView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="PRODUCTS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BKx-Eh-xaf">
-                    <rect key="frame" x="16" y="87" width="94" height="21"/>
-                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PRODUCTS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SpW-4Y-O6R">
+                    <rect key="frame" x="0.3333333333333357" y="118" width="104.66666666666666" height="23"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="LJA-Kg-Ab7">
+                    <rect key="frame" x="0.0" y="163" width="393" height="44"/>
+                    <textInputTraits key="textInputTraits"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="usb-Qk-0AY"/>
+                    </connections>
+                </searchBar>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemMintColor"/>
             <constraints>
-                <constraint firstItem="smd-81-yeY" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="K23-kc-7pd"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="smd-81-yeY" secondAttribute="bottom" id="Wxw-2J-riC"/>
+                <constraint firstItem="SpW-4Y-O6R" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="0lV-GL-aFY"/>
+                <constraint firstItem="LJA-Kg-Ab7" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="45" id="5OB-bC-tPC"/>
+                <constraint firstItem="LJA-Kg-Ab7" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="6iQ-EI-NcF"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="SpW-4Y-O6R" secondAttribute="trailing" constant="288" id="LRw-Tg-Chc"/>
+                <constraint firstItem="smd-81-yeY" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="Suh-hr-KfI"/>
+                <constraint firstItem="smd-81-yeY" firstAttribute="top" secondItem="LJA-Kg-Ab7" secondAttribute="bottom" constant="11" id="WxQ-lx-zhc"/>
+                <constraint firstItem="smd-81-yeY" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="f0i-GH-HaR"/>
+                <constraint firstItem="LJA-Kg-Ab7" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="iEV-e8-zbK"/>
+                <constraint firstItem="smd-81-yeY" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="100" id="sz3-C1-hZp"/>
+                <constraint firstItem="LJA-Kg-Ab7" firstAttribute="top" secondItem="SpW-4Y-O6R" secondAttribute="bottom" constant="22" id="uqW-DR-9VC"/>
                 <constraint firstItem="smd-81-yeY" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="y6e-6D-tjv"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="smd-81-yeY" secondAttribute="trailing" id="yWN-CO-Ble"/>
-                <constraint firstItem="smd-81-yeY" firstAttribute="top" secondItem="BKx-Eh-xaf" secondAttribute="bottom" constant="10" id="zo7-mb-yzB"/>
             </constraints>
             <point key="canvasLocation" x="-69.465648854961827" y="92.957746478873247"/>
         </view>

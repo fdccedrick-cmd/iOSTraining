@@ -10,6 +10,9 @@ import UIKit
 class ProductListViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
+    
+    @IBOutlet weak var productSearch: UISearchBar!
+    
     private let cellIdentifier = "ProductListTableViewCell"
     var products: [Product] = [
         Product(image: "monitor", name: "Computer Monitor", price: 2000, description: "High-resolution display with stunning color accuracy and wide viewing angles"),
