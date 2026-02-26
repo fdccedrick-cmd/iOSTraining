@@ -19,7 +19,17 @@ class ProductListViewController: UIViewController {
     
     var filteredProducts: [Product] = []
     var isSearching: Bool = false
+    var currentSortOption: SortOption = .featured
     
+    enum SortOption {
+        case featured
+        case nameAZ
+        case priceLowToHigh
+        case topRated
+    }
+    
+    
+    private var originalProducts: [Product] = []
     private let cellIdentifier = "ProductListTableViewCell"
     var products: [Product] = [
         Product(image: "monitor", name: "Computer Monitor", price: 2000, description: "High-resolution display with stunning color accuracy and wide viewing angles"),
@@ -37,7 +47,7 @@ class ProductListViewController: UIViewController {
         super.viewDidLoad()
         
         self.title = "Products"
-        
+        originalProducts = products
         
         let nib = UINib(nibName: cellIdentifier, bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "ProductListTableViewCell")
@@ -53,10 +63,84 @@ class ProductListViewController: UIViewController {
         
         productSearch.delegate = self
         // Do any additional setup after loading the view.
+        setupSortButton()
         
     }
     @objc func didTapSort() {
-        print(#function)
+        
+    }
+    
+    private func setupSortButton() {
+        let featured = UIAction(
+            title: "Featured",
+            image: UIImage(systemName: "sparkles"),
+            state: currentSortOption == .featured ? .on : .off
+        ) { _ in
+            self.applySortOption(.featured)
+        }
+
+        let nameAZ = UIAction(
+            title: "Name (A-Z)",
+            image: UIImage(systemName: "textformat.abc"),
+            state: currentSortOption == .nameAZ ? .on : .off
+        ) { _ in
+            self.applySortOption(.nameAZ)
+        }
+
+        let priceLowHigh = UIAction(
+            title: "Price (Low to High)",
+            image: UIImage(systemName: "tag.fill"),
+            state: currentSortOption == .priceLowToHigh ? .on : .off
+        ) { _ in
+            self.applySortOption(.priceLowToHigh)
+        }
+
+        let topRated = UIAction(
+            title: "Top Rated",
+            image: UIImage(systemName: "star.fill"),
+            state: currentSortOption == .topRated ? .on : .off
+        ) { _ in
+            self.applySortOption(.topRated)
+        }
+
+        let menu = UIMenu(
+            title: "Sort Products",
+            options: .displayInline,
+            children: [featured, nameAZ, priceLowHigh, topRated]
+        )
+
+        productSort.menu = menu
+        productSort.showsMenuAsPrimaryAction = true
+    }
+
+    private func applySortOption(_ option: SortOption) {
+        currentSortOption = option
+
+        switch option {
+        case .featured:
+            // Static — reset to original order
+           
+            products = originalProducts
+
+        case .nameAZ:
+            products.sort { $0.name < $1.name }
+
+        case .priceLowToHigh:
+            products.sort { $0.price < $1.price }
+
+        case .topRated:
+            break // Static — no reordering
+        }
+
+        if isSearching, let text = productSearch.text {
+            filteredProducts = products.filter {
+                $0.name.lowercased().contains(text.lowercased())
+            }
+        }
+
+        // Rebuild menu to update checkmarks
+        setupSortButton()
+        tableView.reloadData()
     }
 
 //    @IBAction func didTapDismiss(_ sender: Any) {
