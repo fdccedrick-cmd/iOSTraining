@@ -253,4 +253,52 @@ extension ProductListViewController: UISearchBarDelegate {
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(false, animated: true)
     }
+    
+    // Swipe LEFT → Add to Cart
+    func tableView(_ tableView: UITableView,
+                   trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
+    -> UISwipeActionsConfiguration? {
+
+        let addToCartAction = UIContextualAction(style: .normal, title: "Cart") { (_, _, completion) in
+            
+            let product = self.isSearching
+                ? self.filteredProducts[indexPath.row]
+                : self.products[indexPath.row]
+
+            print("🛒 Added to cart: \(product.name)")
+            
+            // TODO: call your addToCart logic here
+            
+            completion(true)
+        }
+
+        addToCartAction.backgroundColor = .systemGreen
+        addToCartAction.image = UIImage(systemName: "cart.fill")
+
+        return UISwipeActionsConfiguration(actions: [addToCartAction])
+    }
+    
+    // Swipe RIGHT → Add to Favorites
+    func tableView(_ tableView: UITableView,
+                   leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
+    -> UISwipeActionsConfiguration? {
+
+        let favoriteAction = UIContextualAction(style: .normal, title: "Favorite") { (_, _, completion) in
+            
+            let product = self.isSearching
+                ? self.filteredProducts[indexPath.row]
+                : self.products[indexPath.row]
+
+            print("❤️ Added to favorites: \(product.name)")
+            
+            // TODO: call your addToFavorites logic here
+            
+            completion(true)
+        }
+
+        favoriteAction.backgroundColor = .systemPink
+        favoriteAction.image = UIImage(systemName: "heart.fill")
+
+        return UISwipeActionsConfiguration(actions: [favoriteAction])
+    }
 }
