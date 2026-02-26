@@ -80,10 +80,10 @@
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="IPv-YK-0y8">
+                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="IPv-YK-0y8">
                                     <rect key="frame" x="16" y="468" width="492" height="28"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qSL-5A-RQi">
+                                        <view contentMode="scaleToFill" horizontalHuggingPriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="qSL-5A-RQi">
                                             <rect key="frame" x="0.0" y="0.0" width="240" height="28"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="★ 4.9 · 1.1K reviews" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bu0-gI-cI5">
@@ -107,7 +107,7 @@
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kka-WK-Cm6">
+                                        <view contentMode="scaleToFill" horizontalHuggingPriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="Kka-WK-Cm6">
                                             <rect key="frame" x="252" y="0.0" width="240" height="28"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delivery by friday" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pn7-PY-ZMU">
@@ -125,6 +125,11 @@
                                                 <constraint firstAttribute="bottom" secondItem="Pn7-PY-ZMU" secondAttribute="bottom" constant="6" id="kSg-kr-iXS"/>
                                                 <constraint firstAttribute="height" constant="28" id="yw0-rg-4Ng"/>
                                             </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                    <integer key="value" value="10"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
                                         </view>
                                     </subviews>
                                 </stackView>
@@ -142,6 +147,7 @@
                                 <constraint firstItem="Xiw-Yb-25B" firstAttribute="leading" secondItem="FRJ-6H-2ab" secondAttribute="leading" constant="16" id="hmH-Pq-9NT"/>
                                 <constraint firstItem="Xiw-Yb-25B" firstAttribute="top" secondItem="o86-sY-JDa" secondAttribute="bottom" constant="12" id="jzj-k5-vho"/>
                                 <constraint firstAttribute="trailing" secondItem="o86-sY-JDa" secondAttribute="trailing" constant="16" id="o17-QZ-JXR"/>
+                                <constraint firstItem="IPv-YK-0y8" firstAttribute="top" secondItem="Xiw-Yb-25B" secondAttribute="bottom" constant="7.3300000000000001" id="p9k-Co-A2m"/>
                                 <constraint firstItem="3j3-kv-4vr" firstAttribute="leading" secondItem="FRJ-6H-2ab" secondAttribute="leading" constant="12" id="rzB-cW-qpx"/>
                                 <constraint firstItem="vDd-GS-fMv" firstAttribute="top" secondItem="Tbz-5E-eFg" secondAttribute="bottom" constant="8" id="v2s-TD-Rf3"/>
                                 <constraint firstAttribute="height" constant="1200" id="zcd-6Y-fxs"/>
