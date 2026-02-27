@@ -18,7 +18,9 @@ class ProductDetailViewController: UIViewController {
     
     
     weak var delegate: ProductListViewDelegate?
-
+    
+    
+    var dummyProduct: DummyProduct?
     var product: Product?
 
     @objc private func didTapProductName() {
@@ -39,17 +41,29 @@ class ProductDetailViewController: UIViewController {
         let nameTap = UITapGestureRecognizer(target: self, action: #selector(didTapProductName))
         productName.addGestureRecognizer(nameTap)
 
-        if let product = product {
-            self.title = product.name
-            productName.text = product.name
-            productPrice.text = "₱\(product.price)"
-            productDescription.text = product.description
-            pageControl.numberOfPages = product.images.count
-            pageControl.currentPage = 0
-            pageControl.currentPageIndicatorTintColor = .systemGreen
-            pageControl.pageIndicatorTintColor = .systemGray3
-            carouselCollectionView.reloadData()
-        }
+//        if let product = product {
+//            self.title = product.name
+//            productName.text = product.name
+//            productPrice.text = "₱\(product.price)"
+//            productDescription.text = product.description
+//            pageControl.numberOfPages = product.images.count
+//            pageControl.currentPage = 0
+//            pageControl.currentPageIndicatorTintColor = .systemGreen
+//            pageControl.pageIndicatorTintColor = .systemGray3
+//            carouselCollectionView.reloadData()
+//        }
+        if let product = dummyProduct {
+                    self.title = product.title
+                    productName.text = product.title
+                    productPrice.text = String(format: "₱%.2f", product.price)
+                    productDescription.text = product.description
+                    pageControl.numberOfPages =  product.paddedImages.count
+                    pageControl.currentPage = 0
+                    pageControl.currentPageIndicatorTintColor = .systemGreen
+                    pageControl.pageIndicatorTintColor = .systemGray3
+                    carouselCollectionView.reloadData()
+                }
+        
 
         pageControl.addTarget(self,
             action: #selector(pageControlTapped),
@@ -118,7 +132,8 @@ extension ProductDetailViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView,
         numberOfItemsInSection section: Int) -> Int {
-        return product?.images.count ?? 0
+//        return product?.images.count ?? 0
+        return dummyProduct?.paddedImages.count ?? 0
     }
 
     func collectionView(_ collectionView: UICollectionView,
@@ -128,9 +143,14 @@ extension ProductDetailViewController: UICollectionViewDataSource {
             for: indexPath
         ) as! CarouselCollectionViewCell
 
-        if let imageName = product?.images[indexPath.item] {
-            cell.configure(with: imageName)
-        }
+//        if let imageName = product?.images[indexPath.item] {
+//            cell.configure(with: imageName)
+//        }
+        // ✅ Load image from URL string
+        if let urlString = dummyProduct?.paddedImages[indexPath.item], // ✅
+               let url = URL(string: urlString) {
+                cell.configureWithURL(url)
+            }
         return cell
     }
 }

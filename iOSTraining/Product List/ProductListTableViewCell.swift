@@ -24,7 +24,13 @@ class ProductListTableViewCell: UITableViewCell {
     private let stockLabel = UILabel()
     private let gradientBackgroundView = UIView()
     
-    var product: Product? {
+//    var product: Product? {
+//        didSet {
+//            displayData()
+//        }
+//    }
+    
+    var dummyProduct: DummyProduct? {
         didSet {
             displayData()
         }
@@ -206,23 +212,25 @@ class ProductListTableViewCell: UITableViewCell {
     }
     
     private func displayData() {
-        productNameLabel.text = product?.name
-        
-        // Format price without decimal places for cleaner look
-        if let price = product?.price {
-            let formattedPrice = String(format: "₱%.0f", price)
-            productPriceLabel.text = formattedPrice
-        } else {
-            productPriceLabel.text = "₱0"
-        }
-        
-        // Display description from product model
-        productDescription.text = product?.description
-        
-        if let imageName = product?.image {
-            productImageView.image = UIImage(named: imageName)
+        guard let product = dummyProduct else { return }
+
+        productNameLabel.text = product.title
+        productDescription.text = product.description
+        productPriceLabel.text = String(format: "₱%.2f", product.price)
+
+        // Load first image from URL
+        if let urlString = product.images.first, let url = URL(string: urlString) {
+            loadImage(from: url)
         } else {
             productImageView.image = UIImage(systemName: "photo")
+        }
+    }
+
+    private func loadImage(from url: URL) {
+        productImageView.image = UIImage(systemName: "photo") // placeholder
+
+        NetworkManager.shared.fetchImage(from: url) { [weak self] image in
+            self?.productImageView.image = image ?? UIImage(systemName: "photo")
         }
     }
     

@@ -29,6 +29,11 @@ class ProductListViewController: UIViewController {
     var isSearching: Bool = false
     var currentSortOption: SortOption = .featured
     
+    
+    var dummyProducts: [DummyProduct] = []
+    var filteredDummyProducts: [DummyProduct] = []
+    
+    
     enum SortOption {
         case featured
         case nameAZ
@@ -82,39 +87,34 @@ class ProductListViewController: UIViewController {
             description: "Noise-cancelling headphones with premium sound quality"
         ),
     ]
-    func fetchProducts(completionHandler: (() -> Void)? = nil) {
-        guard let url = URL(string: "https://dummyjson.com/products") else { return }
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            if let error = error {
-                print("Error: \(error.localizedDescription)")
-                completionHandler?()
-                return
-            }
-            guard let data = data else {
-                print("No data")
-                completionHandler?()
-                return
-            }
-            let decoder = JSONDecoder()
-            decoder.keyDecodingStrategy = .convertFromSnakeCase
-            do {
-                let productResponse = try decoder.decode(ProductResponse.self, from: data)
-                guard let firstProduct = productResponse.products.first else{
-                    completionHandler?()
-                    return
-                }
-                print("First Product: ", firstProduct.id , firstProduct.title, firstProduct.price)
-            }catch{
-                print(error.localizedDescription)
-            }
-            completionHandler?()
-        }.resume()
-    }
-
-
-
-    
-    
+//    func fetchProducts(completionHandler: (() -> Void)? = nil) {
+//        guard let url = URL(string: "https://dummyjson.com/products") else { return }
+//        URLSession.shared.dataTask(with: url) { data, response, error in
+//            if let error = error {
+//                print("Error: \(error.localizedDescription)")
+//                completionHandler?()
+//                return
+//            }
+//            guard let data = data else {
+//                print("No data")
+//                completionHandler?()
+//                return
+//            }
+//            let decoder = JSONDecoder()
+//            decoder.keyDecodingStrategy = .convertFromSnakeCase
+//            do {
+//                let productResponse = try decoder.decode(ProductResponse.self, from: data)
+//                guard let firstProduct = productResponse.products.first else{
+//                    completionHandler?()
+//                    return
+//                }
+//                print("First Product: ", firstProduct.id , firstProduct.title, firstProduct.price)
+//            }catch{
+//                print(error.localizedDescription)
+//            }
+//            completionHandler?()
+//        }.resume()
+//    }
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -134,23 +134,16 @@ class ProductListViewController: UIViewController {
         productSort.setPreferredSymbolConfiguration(config, forImageIn: .normal)
         self.extendedLayoutIncludesOpaqueBars = true
         self.edgesForExtendedLayout = .all
-        fetchProducts()
+        
+        NetworkManager.shared.delegate = self
+        NetworkManager.shared.fetchProducts()
+            
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
         tableView.refreshControl = refreshControl
     }
     @objc func onRefresh() {
-        print("Refresh")
-        self.fetchProducts {
-            DispatchQueue.main.async {
-                self.tableView.refreshControl?.endRefreshing()
-                self.tableView.reloadData()
-                // for gamay data
-                self.tableView.beginUpdates()
-                self.tableView.reloadRows(at: [IndexPath(row: 5, section: 0)], with: .automatic) // pang gamay na data
-                self.tableView.endUpdates()
-            }
-        }
+        NetworkManager.shared.fetchProducts()
     }
 
     @objc func didTapSort() {
@@ -254,50 +247,93 @@ extension ProductListViewController: UITableViewDelegate, UITableViewDataSource 
         return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return isSearching ? filteredProducts.count : products.count
+//        return isSearching ? filteredProducts.count : products.count
+        return isSearching ? filteredDummyProducts.count : dummyProducts.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) as? ProductListTableViewCell {
-            cell.product = isSearching ? filteredProducts[indexPath.row] : products[indexPath.row]
-            return cell
-        }
-        return UITableViewCell()
+//        if let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) as? ProductListTableViewCell {
+//            cell.product = isSearching ? filteredProducts[indexPath.row] : products[indexPath.row]
+//            return cell
+//        }
+//        return UITableViewCell()
+        
+        guard let cell = tableView.dequeueReusableCell(
+                   withIdentifier: cellIdentifier
+               ) as? ProductListTableViewCell else {
+                   return UITableViewCell()
+               }
+
+               let product = isSearching
+                   ? filteredDummyProducts[indexPath.row]
+                   : dummyProducts[indexPath.row]
+
+               // Map DummyProduct → your cell
+               cell.dummyProduct = product
+
+               return cell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedProduct = isSearching ? filteredProducts[indexPath.row] : products[indexPath.row]
-        let productDetailVC = ProductDetailViewController()
-        productDetailVC.delegate = self
-        productDetailVC.product = selectedProduct
-        productDetailVC.delegate = self
-        self.navigationController?.pushViewController(productDetailVC, animated: true)
+//        let selectedProduct = isSearching ? filteredProducts[indexPath.row] : products[indexPath.row]
+//        let productDetailVC = ProductDetailViewController()
+//        productDetailVC.delegate = self
+//        productDetailVC.product = selectedProduct
+//        productDetailVC.delegate = self
+//        self.navigationController?.pushViewController(productDetailVC, animated: true)
+        let selected = isSearching
+                    ? filteredDummyProducts[indexPath.row]
+                    : dummyProducts[indexPath.row]
+
+                let productDetailVC = ProductDetailViewController()
+                productDetailVC.dummyProduct = selected // pass DummyProduct instead
+                self.navigationController?.pushViewController(productDetailVC, animated: true)
     }
     
     
 }
 extension ProductListViewController: UISearchBarDelegate {
     
+//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+//        if searchText.isEmpty {
+//            isSearching = false
+//            filteredProducts = []
+//        } else {
+//            isSearching = true
+//            filteredProducts = products.filter { product in
+//                product.name.lowercased().contains(searchText.lowercased())
+//            }
+//        }
+//        tableView.reloadData()
+//    }
+//    
+//    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+//        searchBar.text = ""
+//        searchBar.resignFirstResponder()
+//        isSearching = false
+//        filteredProducts = []
+//        tableView.reloadData()
+//    }
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchText.isEmpty {
-            isSearching = false
-            filteredProducts = []
-        } else {
-            isSearching = true
-            filteredProducts = products.filter { product in
-                product.name.lowercased().contains(searchText.lowercased())
+            if searchText.isEmpty {
+                isSearching = false
+                filteredDummyProducts = []
+            } else {
+                isSearching = true
+                filteredDummyProducts = dummyProducts.filter {
+                    $0.title.lowercased().contains(searchText.lowercased())
+                }
             }
+            tableView.reloadData()
         }
-        tableView.reloadData()
-    }
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.text = ""
-        searchBar.resignFirstResponder()
-        isSearching = false
-        filteredProducts = []
-        tableView.reloadData()
-    }
+
+        func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+            searchBar.text = ""
+            searchBar.resignFirstResponder()
+            isSearching = false
+            filteredDummyProducts = []
+            tableView.reloadData()
+        }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder() // dismisses keyboard on Search tap
@@ -366,5 +402,20 @@ extension ProductListViewController: ProductListViewDelegate {
     func didTapProductName(_ product: Product) {
         // For now, just log and optionally navigate back to list or present details
         print("Tapped product name: \(product.name)")
+    }
+}
+
+extension ProductListViewController: NetworkManagerDelegate {
+
+    func didFetchProducts(_ products: [DummyProduct]) {
+        dummyProducts = products
+        tableView.refreshControl?.endRefreshing()
+        tableView.reloadData()
+    }
+
+    func didFailWithError(_ error: Error) {
+        tableView.refreshControl?.endRefreshing()
+        print("Failed to fetch products: \(error.localizedDescription)")
+        // Optionally show an alert to the user
     }
 }

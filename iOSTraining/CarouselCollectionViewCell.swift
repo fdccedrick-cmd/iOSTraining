@@ -22,6 +22,13 @@ class CarouselCollectionViewCell: UICollectionViewCell {
         func configure(with imageName: String) {
             imageView.image = UIImage(named: imageName)
         }
+       func configureWithURL(_ url: URL) {
+           imageView.image = UIImage(systemName: "photo") // placeholder
+
+           NetworkManager.shared.fetchImage(from: url) { [weak self] image in
+               self?.imageView.image = image ?? UIImage(systemName: "photo")
+           }
+       }
     
 //testtt
     
