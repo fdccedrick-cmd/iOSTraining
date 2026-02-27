@@ -38,7 +38,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window = window
         let isLoggedIn = UserDefaults.standard.bool(forKey: "isLoggedIn")
         if isLoggedIn {
-            showProductList()
+            showMainApp(animated: false)
         }else {
             showLoginScreen(animated: false)
         }
@@ -81,12 +81,14 @@ private extension SceneDelegate {
         guard let window else { return }
 
         let applyRoot = {
-            let nav = UINavigationController(rootViewController: viewController)
-            let wereAnimationsEnabled = UIView.areAnimationsEnabled
-            UIView.setAnimationsEnabled(false)
-            window.rootViewController = nav
-            window.makeKeyAndVisible()
-            UIView.setAnimationsEnabled(wereAnimationsEnabled)
+//            let nav = UINavigationController(rootViewController: viewController)
+//            let wereAnimationsEnabled = UIView.areAnimationsEnabled
+//            UIView.setAnimationsEnabled(false)
+//            window.rootViewController = nav
+//            window.makeKeyAndVisible()
+//            UIView.setAnimationsEnabled(wereAnimationsEnabled)
+            window.rootViewController = viewController
+                       window.makeKeyAndVisible()
         }
 
         guard animated else {

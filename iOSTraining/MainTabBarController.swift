@@ -8,41 +8,56 @@
 import UIKit
 
 class MainTabBarController: UITabBarController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        // Tab bar background color
-//            tabBar.barTintColor = UIColor.systemGray6
-//            tabBar.backgroundColor = UIColor.systemGray6
-//
-//            // Optional: item color
-//            tabBar.tintColor = .systemBlue              // selected icon
-//            tabBar.unselectedItemTintColor = .gray
-
-        let productListVC = ProductListViewController()
-                let productsVC = UINavigationController(rootViewController: productListVC)
-                productsVC.setNavigationBarHidden(false, animated: false)
-                productsVC.tabBarItem = UITabBarItem(title: "Products",
-                                                     image: UIImage(systemName: "list.bullet"),
-                                                     tag: 0)
-
-
-        let favoritesVC = UINavigationController(rootViewController: FavoritesViewController())
-        favoritesVC.tabBarItem = UITabBarItem(title: "Favorites",
-                                              image: UIImage(systemName: "heart"),
-                                              tag: 1)
-
-        let cartVC = UINavigationController(rootViewController: CartViewController())
-        cartVC.tabBarItem = UITabBarItem(title: "Cart",
-                                         image: UIImage(systemName: "cart"),
-                                         tag: 2)
-
-        let profileVC = UINavigationController(rootViewController: ProfileViewController())
-        profileVC.tabBarItem = UITabBarItem(title: "Profile",
-                                            image: UIImage(systemName: "person"),
-                                            tag: 3)
-
-        viewControllers = [productsVC, favoritesVC, cartVC, profileVC]
+        // ✅ Tab 1 - Products (has XIB)
+        let productListVC = ProductListViewController(
+            nibName: String(describing: ProductListViewController.self),
+            bundle: nil
+        )
+        let productsNav = UINavigationController(rootViewController: productListVC)
+        productsNav.tabBarItem = UITabBarItem(
+            title: "Products",
+            image: UIImage(systemName: "list.bullet"),
+            tag: 0
+        )
+        
+        // ✅ Tab 2 - Favorites (no XIB)
+        let favoritesVC = FavoritesViewController()
+        favoritesVC.view.backgroundColor = .systemBackground
+        favoritesVC.title = "Favorites"
+        let favoritesNav = UINavigationController(rootViewController: favoritesVC)
+        favoritesNav.tabBarItem = UITabBarItem(
+            title: "Favorites",
+            image: UIImage(systemName: "heart"),
+            tag: 1
+        )
+        
+        // ✅ Tab 3 - Cart (no XIB)
+        let cartVC = CartViewController()
+        cartVC.view.backgroundColor = .systemBackground
+        cartVC.title = "Cart"
+        let cartNav = UINavigationController(rootViewController: cartVC)
+        cartNav.tabBarItem = UITabBarItem(
+            title: "Cart",
+            image: UIImage(systemName: "cart"),
+            tag: 2
+        )
+        
+        // ✅ Tab 4 - Profile (no XIB)
+        let profileVC = ProfileViewController()
+        profileVC.view.backgroundColor = .systemBackground
+        profileVC.title = "Profile"
+        let profileNav = UINavigationController(rootViewController: profileVC)
+        profileNav.tabBarItem = UITabBarItem(
+            title: "Profile",
+            image: UIImage(systemName: "person"),
+            tag: 3
+        )
+        
+        viewControllers = [productsNav, favoritesNav, cartNav, profileNav]
+        tabBar.tintColor = .systemTeal
     }
 }
