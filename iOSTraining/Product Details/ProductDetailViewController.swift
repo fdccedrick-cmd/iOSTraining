@@ -32,17 +32,20 @@ class ProductDetailViewController: UIViewController {
     
     var dummyProduct: DummyProduct?
     var product: Product?
-
+    private var selectedImageURL: URL?
+    
+    
     @objc private func didTapProductName() {
         delegate?.userHasTriggerSomething()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupImageTapGesture()
 
         setupCarousel()
-        setupAppearance()   // ✅
-        populateData()      // ✅
+        setupAppearance()
+        populateData()
         
         carouselCollectionView.isScrollEnabled = true
         carouselCollectionView.isUserInteractionEnabled = true
@@ -91,8 +94,6 @@ class ProductDetailViewController: UIViewController {
                                                                                                 
    
     }
-
-    
     
     @objc private func pageControlTapped(_ sender: UIPageControl) {
         let indexPath = IndexPath(item: sender.currentPage, section: 0)
@@ -101,6 +102,95 @@ class ProductDetailViewController: UIViewController {
             at: .centeredHorizontally,
             animated: true
         )
+    }
+    private func setupImageTapGesture() {
+        // Tap is on the carouselCollectionView since it holds the images
+        let tap = UITapGestureRecognizer(target: self, action: #selector(didTapProductImage))
+        carouselCollectionView.addGestureRecognizer(tap)
+        carouselCollectionView.isUserInteractionEnabled = true
+    }
+
+    @objc private func didTapProductImage() {
+        // Get current visible image URL based on current page
+        let currentIndex = pageControl.currentPage
+        guard let urlString = dummyProduct?.paddedImages[currentIndex],
+              let url = URL(string: urlString) else { return }
+        
+        presentImageViewer(url)
+    }
+
+    private func presentImageViewer(_ url: URL) {
+        // Fullscreen overlay
+        let overlayView = UIView(frame: UIScreen.main.bounds)
+        overlayView.backgroundColor = UIColor.black.withAlphaComponent(0.9)
+        overlayView.alpha = 0
+        overlayView.tag = 999
+
+        // Image view
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        imageView.clipsToBounds = true
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(systemName: "photo") // placeholder
+
+        // Close button
+        let closeButton = UIButton(type: .system)
+        closeButton.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
+        closeButton.tintColor = .white
+        closeButton.translatesAutoresizingMaskIntoConstraints = false
+        closeButton.addTarget(self, action: #selector(dismissImageViewer), for: .touchUpInside)
+        let config = UIImage.SymbolConfiguration(pointSize: 30, weight: .medium)
+        closeButton.setPreferredSymbolConfiguration(config, forImageIn: .normal)
+
+        overlayView.addSubview(imageView)
+        overlayView.addSubview(closeButton)
+
+        NSLayoutConstraint.activate([
+            imageView.centerXAnchor.constraint(equalTo: overlayView.centerXAnchor),
+            imageView.centerYAnchor.constraint(equalTo: overlayView.centerYAnchor),
+            imageView.leadingAnchor.constraint(equalTo: overlayView.leadingAnchor),
+            imageView.trailingAnchor.constraint(equalTo: overlayView.trailingAnchor),
+            imageView.heightAnchor.constraint(equalTo: overlayView.heightAnchor, multiplier: 0.6),
+
+            closeButton.topAnchor.constraint(equalTo: overlayView.topAnchor, constant: 55),
+            closeButton.trailingAnchor.constraint(equalTo: overlayView.trailingAnchor, constant: -20)
+        ])
+
+        // Add to window so it covers everything including nav bar
+        guard let window = UIApplication.shared.connectedScenes
+            .compactMap({ $0 as? UIWindowScene })
+            .first?.windows.first else { return }
+
+        window.addSubview(overlayView)
+
+        // Animate in
+        UIView.animate(withDuration: 0.25) {
+            overlayView.alpha = 1
+        }
+
+        // Load image
+        NetworkManager.shared.fetchImage(from: url) { image in
+            UIView.transition(with: imageView, duration: 0.2, options: .transitionCrossDissolve) {
+                imageView.image = image ?? UIImage(systemName: "photo")
+            }
+        }
+
+        // Tap outside to dismiss
+        let tapToDismiss = UITapGestureRecognizer(target: self, action: #selector(dismissImageViewer))
+        overlayView.addGestureRecognizer(tapToDismiss)
+    }
+
+    @objc private func dismissImageViewer() {
+        guard let window = UIApplication.shared.connectedScenes
+            .compactMap({ $0 as? UIWindowScene })
+            .first?.windows.first,
+              let overlay = window.viewWithTag(999) else { return }
+
+        UIView.animate(withDuration: 0.25, animations: {
+            overlay.alpha = 0
+        }, completion: { _ in
+            overlay.removeFromSuperview()
+        })
     }
     
     private func setupAppearance() {
