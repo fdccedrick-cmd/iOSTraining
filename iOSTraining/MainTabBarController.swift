@@ -48,13 +48,9 @@ class MainTabBarController: UITabBarController {
         
         // ✅ Tab 4 - Profile (no XIB)
         
-        let profileVC = ProfilePageViewController(
-            nibName: String(describing: ProfilePageViewController.self),
-            bundle: nil
-        )
+        let profileVC = ProfilePageViewController()
         profileVC.title = "Profile"
-
-        let profileNav = UINavigationController(rootViewController: profileVC) // ✅
+        let profileNav = UINavigationController(rootViewController: profileVC)
         profileNav.tabBarItem = UITabBarItem(
             title: "Profile",
             image: UIImage(systemName: "person"),

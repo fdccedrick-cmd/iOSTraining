@@ -255,6 +255,40 @@ extension ProductListViewController: UITableViewDelegate, UITableViewDataSource 
                 productDetailVC.dummyProduct = selected // pass DummyProduct instead
                 self.navigationController?.pushViewController(productDetailVC, animated: true)
     }
+    private func showToast(message: String) {
+        let toast = UILabel()
+        toast.text = "  \(message)  "
+        toast.font = .systemFont(ofSize: 14, weight: .medium)
+        toast.textColor = .white
+        toast.backgroundColor = UIColor.black.withAlphaComponent(0.75)
+        toast.textAlignment = .center
+        toast.layer.cornerRadius = 20
+        toast.clipsToBounds = true
+        toast.alpha = 0
+        toast.numberOfLines = 0
+        toast.translatesAutoresizingMaskIntoConstraints = false
+
+        view.addSubview(toast)
+
+        NSLayoutConstraint.activate([
+            toast.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            toast.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            toast.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 40),
+            toast.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -40),
+            toast.heightAnchor.constraint(greaterThanOrEqualToConstant: 40)
+        ])
+
+        // Fade in → wait → fade out → remove
+        UIView.animate(withDuration: 0.3, animations: {
+            toast.alpha = 1
+        }, completion: { _ in
+            UIView.animate(withDuration: 0.4, delay: 1.5, animations: {
+                toast.alpha = 0
+            }, completion: { _ in
+                toast.removeFromSuperview()
+            })
+        })
+    }
     
     
 }
@@ -296,22 +330,24 @@ extension ProductListViewController: UISearchBarDelegate {
                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
     -> UISwipeActionsConfiguration? {
 
-        let addToCartAction = UIContextualAction(style: .normal, title: "Cart") { (_, _, completion) in
-            
+        let addToCartAction = UIContextualAction(style: .normal, title: "Cart") { _, _, completion in
             let product = self.isSearching
-                ? self.filteredProducts[indexPath.row]
-                : self.products[indexPath.row]
+                ? self.filteredDummyProducts[indexPath.row]
+                : self.dummyProducts[indexPath.row]
 
-            print("🛒 Added to cart: \(product.name)")
-            
-            // TODO: call your addToCart logic here
-            
+            // ✅ Add to CartViewController
+            if let tabBar = self.tabBarController,
+               let cartNav = tabBar.viewControllers?[2] as? UINavigationController,
+               let cartVC = cartNav.viewControllers.first as? CartViewController {
+                cartVC.addToCart(product)
+            }
+
+            self.showToast(message: "🛒 \(product.title) added to cart")
             completion(true)
         }
 
         addToCartAction.backgroundColor = .systemGreen
         addToCartAction.image = UIImage(systemName: "cart.fill")
-
         return UISwipeActionsConfiguration(actions: [addToCartAction])
     }
     
@@ -320,22 +356,24 @@ extension ProductListViewController: UISearchBarDelegate {
                    leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
     -> UISwipeActionsConfiguration? {
 
-        let favoriteAction = UIContextualAction(style: .normal, title: "Favorite") { (_, _, completion) in
-            
+        let favoriteAction = UIContextualAction(style: .normal, title: "Favorite") { _, _, completion in
             let product = self.isSearching
-                ? self.filteredProducts[indexPath.row]
-                : self.products[indexPath.row]
+                ? self.filteredDummyProducts[indexPath.row]
+                : self.dummyProducts[indexPath.row]
 
-            print("❤️ Added to favorites: \(product.name)")
-            
-            // TODO: call your addToFavorites logic here
-            
+            // ✅ Get FavoritesViewController from tab bar and add product
+            if let tabBar = self.tabBarController,
+               let favNav = tabBar.viewControllers?[1] as? UINavigationController,
+               let favVC = favNav.viewControllers.first as? FavoritesViewController {
+                favVC.addFavorite(product)
+            }
+    
+            self.showToast(message: "❤️ \(product.title) added to favorites")
             completion(true)
         }
 
         favoriteAction.backgroundColor = .systemPink
         favoriteAction.image = UIImage(systemName: "heart.fill")
-
         return UISwipeActionsConfiguration(actions: [favoriteAction])
     }
 }
