@@ -23,12 +23,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             nibName: String(describing: SigninViewController.self),
             bundle: nil
         )
-
+        
         setRootViewController(loginViewController, animated: animated)
     }
     func showMainApp(animated: Bool = true) {
         let tabBar = MainTabBarController()
         setRootViewController(tabBar, animated: animated)
+    }
+    func logout(animated: Bool = true) {
+        UserDefaults.standard.set(false, forKey: "isLoggedIn")
+        UserDefaults.standard.removeObject(forKey: "email")
+        UserDefaults.standard.removeObject(forKey: "password")
+        showLoginScreen(animated: animated)
     }
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
