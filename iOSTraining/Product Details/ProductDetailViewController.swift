@@ -42,6 +42,9 @@ class ProductDetailViewController: UIViewController {
         pageControl.addTarget(self,
             action: #selector(pageControlTapped),
             for: .valueChanged)
+        
+        // Style the back button color to match your theme
+            navigationController?.navigationBar.tintColor = .systemTeal
     }
 
     @objc private func pageControlTapped(_ sender: UIPageControl) {

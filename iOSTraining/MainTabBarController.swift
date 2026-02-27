@@ -12,18 +12,21 @@ class MainTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Tab bar background color
-            tabBar.barTintColor = UIColor.systemGray6
-            tabBar.backgroundColor = UIColor.systemGray6
+//        // Tab bar background color
+//            tabBar.barTintColor = UIColor.systemGray6
+//            tabBar.backgroundColor = UIColor.systemGray6
+//
+//            // Optional: item color
+//            tabBar.tintColor = .systemBlue              // selected icon
+//            tabBar.unselectedItemTintColor = .gray
 
-            // Optional: item color
-            tabBar.tintColor = .systemBlue              // selected icon
-            tabBar.unselectedItemTintColor = .gray
+        let productListVC = ProductListViewController()
+                let productsVC = UINavigationController(rootViewController: productListVC)
+                productsVC.setNavigationBarHidden(true, animated: false)
+                productsVC.tabBarItem = UITabBarItem(title: "Products",
+                                                     image: UIImage(systemName: "list.bullet"),
+                                                     tag: 0)
 
-        let productsVC = UINavigationController(rootViewController: ProductListViewController())
-        productsVC.tabBarItem = UITabBarItem(title: "Products",
-                                             image: UIImage(systemName: "list.bullet"),
-                                             tag: 0)
 
         let favoritesVC = UINavigationController(rootViewController: FavoritesViewController())
         favoritesVC.tabBarItem = UITabBarItem(title: "Favorites",

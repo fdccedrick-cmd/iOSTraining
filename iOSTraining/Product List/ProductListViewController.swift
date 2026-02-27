@@ -78,7 +78,7 @@ class ProductListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        self.title = "Products"
+        self.title = "Products"
         originalProducts = products
         
         let nib = UINib(nibName: cellIdentifier, bundle: nil)
@@ -99,6 +99,12 @@ class ProductListViewController: UIViewController {
         let config = UIImage.SymbolConfiguration(pointSize: 24, weight: .medium)
         productSort.setPreferredSymbolConfiguration(config, forImageIn: .normal)
         
+          
+          // Extend layout under navigation bar
+          extendedLayoutIncludesOpaqueBars = true
+          edgesForExtendedLayout = .all
+        
+     
     }
     @objc func didTapSort() {
         
@@ -176,6 +182,7 @@ class ProductListViewController: UIViewController {
         setupSortButton()
         tableView.reloadData()
     }
+    
 
 //    @IBAction func didTapDismiss(_ sender: Any) {
 //        self.dismiss(animated: true)
