@@ -13,6 +13,7 @@ struct Product {
     let name: String
     let price: Double
     let description: String
+  
     
     // Original init — single image (backwards compatible)
         init(image: String?, name: String, price: Double, description: String) {
@@ -21,6 +22,7 @@ struct Product {
             self.price = price
             self.description = description
             self.images = [image, image, image].compactMap { $0 }
+           
         }
         
         // New init — multiple images for carousel
@@ -30,6 +32,11 @@ struct Product {
             self.name = name
             self.price = price
             self.description = description
+            
         }
     
+    
 }
+
+
+

@@ -22,7 +22,7 @@ class MainTabBarController: UITabBarController {
 
         let productListVC = ProductListViewController()
                 let productsVC = UINavigationController(rootViewController: productListVC)
-                productsVC.setNavigationBarHidden(true, animated: false)
+                productsVC.setNavigationBarHidden(false, animated: false)
                 productsVC.tabBarItem = UITabBarItem(title: "Products",
                                                      image: UIImage(systemName: "list.bullet"),
                                                      tag: 0)

@@ -11,6 +11,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
+    
+    func showProductList(animated: Bool = false) {
+        let viewController = ProductListViewController()
+            setRootViewController(viewController, animated: animated)
+        }
+            
+    
     func showLoginScreen(animated: Bool = false) {
         let loginViewController = SigninViewController(
             nibName: String(describing: SigninViewController.self),
@@ -19,17 +26,23 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         setRootViewController(loginViewController, animated: animated)
     }
-//    func showMainApp(animated: Bool = true) {
-//        let tabBar = MainTabBarController()
-//        setRootViewController(tabBar, animated: animated)
-//    }
+    func showMainApp(animated: Bool = true) {
+        let tabBar = MainTabBarController()
+        setRootViewController(tabBar, animated: animated)
+    }
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
         let window = UIWindow(windowScene: windowScene)
         self.window = window
-        showLoginScreen(animated: false)
+        let isLoggedIn = UserDefaults.standard.bool(forKey: "isLoggedIn")
+        if isLoggedIn {
+            showProductList()
+        }else {
+            showLoginScreen(animated: false)
+        }
+      
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

@@ -1,4 +1,3 @@
-
 //
 //  ViewController.swift
 //  iOSTraining
@@ -54,6 +53,11 @@ class SigninViewController: UIViewController {
         let email = emailTextfield.text ?? ""
         let pass = passwordTextfield.text ?? ""
         
+        UserDefaults.standard.set(email, forKey: "email")
+        UserDefaults.standard.set(pass, forKey: "password")
+        UserDefaults.standard.set(true, forKey: "isLoggedIn")
+        UserDefaults.standard.synchronize()
+        
         print(email)
         print(pass)
         
@@ -67,13 +71,17 @@ class SigninViewController: UIViewController {
         //Present - dismiss
 //    
         let productListVC = ProductListViewController()
+        
+        
 ////        productListVC.modalTransitionStyle = .crossDissolve
 ////        productListVC.modalPresentationStyle = .fullScreen
 ////        self.present(productListVC, animated: true)
-        self.navigationController?.pushViewController(productListVC, animated: true)
-//        if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
-//            sceneDelegate.showMainApp(animated: true)
-//        }
+//        self.navigationController?.pushViewController(productListVC, animated: true)
+        if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+            sceneDelegate.showMainApp(animated: true)
+            
+            
+        }
 //        let vc = TestViewController()
 //        self.navigationController?.pushViewController(vc, animated: true)
         

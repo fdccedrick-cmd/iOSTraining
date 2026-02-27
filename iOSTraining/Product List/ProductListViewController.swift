@@ -7,6 +7,14 @@
 
 import UIKit
 
+
+protocol ProductListViewDelegate: AnyObject {
+    
+    func userHasTriggerSomething()
+    
+    func didTapProductName(_ product: Product)
+}
+
 class ProductListViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
@@ -27,7 +35,7 @@ class ProductListViewController: UIViewController {
         case priceLowToHigh
         case topRated
     }
-
+    
     private var originalProducts: [Product] = []
     private let cellIdentifier = "ProductListTableViewCell"
     var products: [Product] = [
@@ -74,38 +82,77 @@ class ProductListViewController: UIViewController {
             description: "Noise-cancelling headphones with premium sound quality"
         ),
     ]
+    func fetchProducts(completionHandler: (() -> Void)? = nil) {
+        guard let url = URL(string: "https://dummyjson.com/products") else { return }
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            if let error = error {
+                print("Error: \(error.localizedDescription)")
+                completionHandler?()
+                return
+            }
+            guard let data = data else {
+                print("No data")
+                completionHandler?()
+                return
+            }
+            let decoder = JSONDecoder()
+            decoder.keyDecodingStrategy = .convertFromSnakeCase
+            do {
+                let productResponse = try decoder.decode(ProductResponse.self, from: data)
+                guard let firstProduct = productResponse.products.first else{
+                    completionHandler?()
+                    return
+                }
+                print("First Product: ", firstProduct.id , firstProduct.title, firstProduct.price)
+            }catch{
+                print(error.localizedDescription)
+            }
+            completionHandler?()
+        }.resume()
+    }
+
+
+
     
+    
+   
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.title = "Products"
         originalProducts = products
-        
         let nib = UINib(nibName: cellIdentifier, bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: "ProductListTableViewCell")
-        
+        tableView.register(nib, forCellReuseIdentifier: cellIdentifier)
         tableView.dataSource = self
         tableView.delegate = self
-        
-        // Modern cell height configuration
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 180
-        tableView.separatorStyle = .none // Remove separators for card style
+        tableView.separatorStyle = .none
         tableView.backgroundColor = .systemGroupedBackground
-        
         productSearch.delegate = self
-        // Do any additional setup after loading the view.
         setupSortButton()
         let config = UIImage.SymbolConfiguration(pointSize: 24, weight: .medium)
         productSort.setPreferredSymbolConfiguration(config, forImageIn: .normal)
-        
-          
-          // Extend layout under navigation bar
-          extendedLayoutIncludesOpaqueBars = true
-          edgesForExtendedLayout = .all
-        
-     
+        self.extendedLayoutIncludesOpaqueBars = true
+        self.edgesForExtendedLayout = .all
+        fetchProducts()
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
+        tableView.refreshControl = refreshControl
     }
+    @objc func onRefresh() {
+        print("Refresh")
+        self.fetchProducts {
+            DispatchQueue.main.async {
+                self.tableView.refreshControl?.endRefreshing()
+                self.tableView.reloadData()
+                // for gamay data
+                self.tableView.beginUpdates()
+                self.tableView.reloadRows(at: [IndexPath(row: 5, section: 0)], with: .automatic) // pang gamay na data
+                self.tableView.endUpdates()
+            }
+        }
+    }
+
     @objc func didTapSort() {
         
     }
@@ -221,7 +268,9 @@ extension ProductListViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedProduct = isSearching ? filteredProducts[indexPath.row] : products[indexPath.row]
         let productDetailVC = ProductDetailViewController()
+        productDetailVC.delegate = self
         productDetailVC.product = selectedProduct
+        productDetailVC.delegate = self
         self.navigationController?.pushViewController(productDetailVC, animated: true)
     }
     
@@ -307,5 +356,15 @@ extension ProductListViewController: UISearchBarDelegate {
         favoriteAction.image = UIImage(systemName: "heart.fill")
 
         return UISwipeActionsConfiguration(actions: [favoriteAction])
+    }
+}
+
+extension ProductListViewController: ProductListViewDelegate {
+    func userHasTriggerSomething() {
+        print("User triggered something in the product list view")
+    }
+    func didTapProductName(_ product: Product) {
+        // For now, just log and optionally navigate back to list or present details
+        print("Tapped product name: \(product.name)")
     }
 }

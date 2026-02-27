@@ -15,8 +15,15 @@ class ProductDetailViewController: UIViewController {
     @IBOutlet weak var productName: UILabel!
     @IBOutlet weak var productPrice: UILabel!
     @IBOutlet weak var productDescription: UILabel!
+    
+    
+    weak var delegate: ProductListViewDelegate?
 
     var product: Product?
+
+    @objc private func didTapProductName() {
+        delegate?.userHasTriggerSomething()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +33,11 @@ class ProductDetailViewController: UIViewController {
         carouselCollectionView.isScrollEnabled = true
         carouselCollectionView.isUserInteractionEnabled = true
         scrollView.canCancelContentTouches = false
+
+        // Add tap gesture to product name label
+        productName.isUserInteractionEnabled = true
+        let nameTap = UITapGestureRecognizer(target: self, action: #selector(didTapProductName))
+        productName.addGestureRecognizer(nameTap)
 
         if let product = product {
             self.title = product.name
@@ -45,8 +57,17 @@ class ProductDetailViewController: UIViewController {
         
         // Style the back button color to match your theme
             navigationController?.navigationBar.tintColor = .systemTeal
+        
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapProductName))
+        productDescription.isUserInteractionEnabled = true
+        productDescription.addGestureRecognizer(tapGesture)
+                                                                                                
+   
     }
 
+    
+    
     @objc private func pageControlTapped(_ sender: UIPageControl) {
         let indexPath = IndexPath(item: sender.currentPage, section: 0)
         carouselCollectionView.scrollToItem(
