@@ -15,6 +15,16 @@ class ProductDetailViewController: UIViewController {
     @IBOutlet weak var productName: UILabel!
     @IBOutlet weak var productPrice: UILabel!
     @IBOutlet weak var productDescription: UILabel!
+    @IBOutlet weak var productCategory: UILabel!
+    @IBOutlet weak var productWearableLabel: UILabel!
+    @IBOutlet weak var productFeaturedButton: UILabel!
+
+    
+    @IBOutlet weak var buyNowButton: UIButton!
+    
+    
+    
+    @IBOutlet weak var addToCartButton: UIButton!
     
     
     weak var delegate: ProductListViewDelegate?
@@ -31,7 +41,9 @@ class ProductDetailViewController: UIViewController {
         super.viewDidLoad()
 
         setupCarousel()
-
+        setupAppearance()   // ✅
+        populateData()      // ✅
+        
         carouselCollectionView.isScrollEnabled = true
         carouselCollectionView.isUserInteractionEnabled = true
         scrollView.canCancelContentTouches = false
@@ -90,7 +102,40 @@ class ProductDetailViewController: UIViewController {
             animated: true
         )
     }
+    
+    private func setupAppearance() {
+        [productCategory, productWearableLabel, productFeaturedButton].forEach { label in
+               label?.font = .systemFont(ofSize: 11, weight: .semibold)
+               label?.textColor = .systemGreen
+               label?.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.1)
+               label?.layer.cornerRadius = 6
+               label?.layer.masksToBounds = true
+               label?.textAlignment = .center
+           }
+        
+        buyNowButton.backgroundColor = .systemGreen
+            buyNowButton.setTitleColor(.white, for: .normal)
+            buyNowButton.titleLabel?.font = .systemFont(ofSize: 16, weight: .semibold)
+            buyNowButton.layer.cornerRadius = 14
+            buyNowButton.layer.masksToBounds = true
+            buyNowButton.backgroundColor = .systemGreen
+            
+        
+        addToCartButton.backgroundColor = .clear
+            addToCartButton.setTitleColor(.systemGreen, for: .normal)
+            addToCartButton.titleLabel?.font = .systemFont(ofSize: 16, weight: .semibold)
+            addToCartButton.layer.cornerRadius = 14
+            addToCartButton.layer.borderWidth = 1.5
+            addToCartButton.layer.borderColor = UIColor.systemGreen.cgColor
+    }
+    private func populateData() {
+        guard let product = dummyProduct else { return }
 
+        productCategory.text = "  \(product.category.uppercased())  "
+        productWearableLabel.text = "  WEARABLE  "   // static for now
+        productFeaturedButton.text = "  FEATURED  "  // static for now
+    }
+    
     private func setupCarousel() {
         let nib = UINib(nibName: "CarouselCollectionViewCell", bundle: nil)
         carouselCollectionView.register(
