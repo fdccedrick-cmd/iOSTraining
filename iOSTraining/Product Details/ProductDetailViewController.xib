@@ -91,13 +91,13 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="IPv-YK-0y8">
-                                    <rect key="frame" x="16" y="446.66666666666669" width="492" height="48"/>
+                                    <rect key="frame" x="16" y="446.66666666666669" width="402" height="48"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" horizontalHuggingPriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="qSL-5A-RQi">
-                                            <rect key="frame" x="0.0" y="10" width="240" height="28"/>
+                                            <rect key="frame" x="0.0" y="10" width="150" height="28"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="★ 4.9 · 1.1K reviews" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bu0-gI-cI5">
-                                                    <rect key="frame" x="10" y="6" width="220" height="16"/>
+                                                    <rect key="frame" x="9.9999999999999929" y="6" width="112.33333333333331" height="16"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -108,7 +108,8 @@
                                                 <constraint firstAttribute="bottom" secondItem="bu0-gI-cI5" secondAttribute="bottom" constant="6" id="GyK-Il-v1D"/>
                                                 <constraint firstAttribute="height" constant="28" id="OSg-Ox-eYK"/>
                                                 <constraint firstItem="bu0-gI-cI5" firstAttribute="top" secondItem="qSL-5A-RQi" secondAttribute="top" constant="6" id="aH3-nK-ifN"/>
-                                                <constraint firstAttribute="trailing" secondItem="bu0-gI-cI5" secondAttribute="trailing" constant="10" id="mgs-l4-kZO"/>
+                                                <constraint firstAttribute="width" constant="150" id="bUj-C2-6zR"/>
+                                                <constraint firstAttribute="trailing" secondItem="bu0-gI-cI5" secondAttribute="trailing" priority="200" constant="10" id="mgs-l4-kZO"/>
                                                 <constraint firstItem="bu0-gI-cI5" firstAttribute="leading" secondItem="qSL-5A-RQi" secondAttribute="leading" constant="10" id="mkF-Mu-FGQ"/>
                                             </constraints>
                                             <userDefinedRuntimeAttributes>
@@ -118,7 +119,7 @@
                                             </userDefinedRuntimeAttributes>
                                         </view>
                                         <view contentMode="scaleToFill" horizontalHuggingPriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="Kka-WK-Cm6">
-                                            <rect key="frame" x="252" y="10" width="240" height="28"/>
+                                            <rect key="frame" x="162" y="10" width="240" height="28"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delivery by friday" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pn7-PY-ZMU">
                                                     <rect key="frame" x="10" y="6" width="220" height="16"/>
@@ -143,7 +144,6 @@
                                         </view>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="Kka-WK-Cm6" firstAttribute="leading" secondItem="IPv-YK-0y8" secondAttribute="leading" constant="252" id="MZL-fA-Thu"/>
                                         <constraint firstItem="qSL-5A-RQi" firstAttribute="top" secondItem="IPv-YK-0y8" secondAttribute="top" constant="10" id="YrW-1e-x0r"/>
                                     </constraints>
                                 </stackView>
@@ -262,7 +262,6 @@
                                 <constraint firstAttribute="trailing" secondItem="vDd-GS-fMv" secondAttribute="trailing" constant="16" id="Tfx-Ck-J91"/>
                                 <constraint firstItem="vDd-GS-fMv" firstAttribute="leading" secondItem="FRJ-6H-2ab" secondAttribute="leading" constant="16" id="V3u-0T-qnt"/>
                                 <constraint firstItem="Tbz-5E-eFg" firstAttribute="top" secondItem="BOk-F0-L8E" secondAttribute="bottom" constant="16" id="VvO-XA-XHM"/>
-                                <constraint firstAttribute="trailing" secondItem="IPv-YK-0y8" secondAttribute="trailing" constant="-115" id="ZeZ-4X-a4V"/>
                                 <constraint firstItem="BOk-F0-L8E" firstAttribute="top" secondItem="FRJ-6H-2ab" secondAttribute="top" id="dCb-cf-Y20"/>
                                 <constraint firstItem="4yF-pQ-jWR" firstAttribute="top" secondItem="FRJ-6H-2ab" secondAttribute="top" constant="514.66666666666663" id="gYG-Rq-fEx"/>
                                 <constraint firstItem="Tbz-5E-eFg" firstAttribute="leading" secondItem="FRJ-6H-2ab" secondAttribute="leading" constant="16" id="gZd-Cv-yZZ"/>

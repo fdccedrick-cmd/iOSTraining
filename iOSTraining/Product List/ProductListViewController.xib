@@ -23,7 +23,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <searchBar contentMode="redraw" verticalCompressionResistancePriority="749" searchBarStyle="minimal" placeholder="Search Product here" translatesAutoresizingMaskIntoConstraints="NO" id="LJA-Kg-Ab7">
-                    <rect key="frame" x="0.0" y="148" width="343" height="44"/>
+                    <rect key="frame" x="0.0" y="128" width="343" height="44"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="3uQ-oL-40d"/>
                     </constraints>
@@ -34,14 +34,14 @@
                     </connections>
                 </searchBar>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="smd-81-yeY">
-                    <rect key="frame" x="0.0" y="196" width="393" height="634"/>
+                    <rect key="frame" x="0.0" y="187" width="393" height="634"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="634" id="xzH-jS-VRY"/>
                     </constraints>
                 </tableView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sEg-jd-VTk">
-                    <rect key="frame" x="327.33333333333331" y="153" width="49.666666666666686" height="34.333333333333343"/>
+                    <rect key="frame" x="335.33333333333331" y="133" width="41.666666666666686" height="34.333333333333343"/>
                     <color key="tintColor" red="0.92156862750000001" green="0.92156862750000001" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <state key="normal" title="Button"/>
                     <buttonConfiguration key="configuration" style="tinted" cornerStyle="dynamic">
@@ -53,14 +53,15 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemMintColor"/>
             <constraints>
+                <constraint firstItem="sEg-jd-VTk" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="335.32999999999998" id="3K6-ob-lDd"/>
                 <constraint firstItem="LJA-Kg-Ab7" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="6iQ-EI-NcF"/>
-                <constraint firstItem="LJA-Kg-Ab7" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="30" id="EPi-GD-YLN"/>
+                <constraint firstItem="LJA-Kg-Ab7" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="EPi-GD-YLN"/>
                 <constraint firstAttribute="bottom" secondItem="smd-81-yeY" secondAttribute="bottom" id="Eij-oR-bbJ"/>
                 <constraint firstItem="sEg-jd-VTk" firstAttribute="centerY" secondItem="LJA-Kg-Ab7" secondAttribute="centerY" id="Gps-pm-cEF"/>
                 <constraint firstItem="smd-81-yeY" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="Suh-hr-KfI"/>
                 <constraint firstAttribute="trailing" secondItem="LJA-Kg-Ab7" secondAttribute="trailing" constant="50" id="ZIA-v9-kH8"/>
                 <constraint firstItem="smd-81-yeY" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="f0i-GH-HaR"/>
-                <constraint firstItem="smd-81-yeY" firstAttribute="top" secondItem="LJA-Kg-Ab7" secondAttribute="bottom" constant="4" id="nUS-I3-Va4"/>
+                <constraint firstItem="smd-81-yeY" firstAttribute="top" secondItem="LJA-Kg-Ab7" secondAttribute="bottom" constant="15" id="nUS-I3-Va4"/>
                 <constraint firstItem="sEg-jd-VTk" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailingMargin" id="y3r-lk-JmE"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="smd-81-yeY" secondAttribute="trailing" id="yWN-CO-Ble"/>
             </constraints>

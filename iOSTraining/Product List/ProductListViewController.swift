@@ -87,34 +87,6 @@ class ProductListViewController: UIViewController {
             description: "Noise-cancelling headphones with premium sound quality"
         ),
     ]
-//    func fetchProducts(completionHandler: (() -> Void)? = nil) {
-//        guard let url = URL(string: "https://dummyjson.com/products") else { return }
-//        URLSession.shared.dataTask(with: url) { data, response, error in
-//            if let error = error {
-//                print("Error: \(error.localizedDescription)")
-//                completionHandler?()
-//                return
-//            }
-//            guard let data = data else {
-//                print("No data")
-//                completionHandler?()
-//                return
-//            }
-//            let decoder = JSONDecoder()
-//            decoder.keyDecodingStrategy = .convertFromSnakeCase
-//            do {
-//                let productResponse = try decoder.decode(ProductResponse.self, from: data)
-//                guard let firstProduct = productResponse.products.first else{
-//                    completionHandler?()
-//                    return
-//                }
-//                print("First Product: ", firstProduct.id , firstProduct.title, firstProduct.price)
-//            }catch{
-//                print(error.localizedDescription)
-//            }
-//            completionHandler?()
-//        }.resume()
-//    }
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -275,12 +247,6 @@ extension ProductListViewController: UITableViewDelegate, UITableViewDataSource 
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let selectedProduct = isSearching ? filteredProducts[indexPath.row] : products[indexPath.row]
-//        let productDetailVC = ProductDetailViewController()
-//        productDetailVC.delegate = self
-//        productDetailVC.product = selectedProduct
-//        productDetailVC.delegate = self
-//        self.navigationController?.pushViewController(productDetailVC, animated: true)
         let selected = isSearching
                     ? filteredDummyProducts[indexPath.row]
                     : dummyProducts[indexPath.row]
@@ -293,27 +259,6 @@ extension ProductListViewController: UITableViewDelegate, UITableViewDataSource 
     
 }
 extension ProductListViewController: UISearchBarDelegate {
-    
-//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//        if searchText.isEmpty {
-//            isSearching = false
-//            filteredProducts = []
-//        } else {
-//            isSearching = true
-//            filteredProducts = products.filter { product in
-//                product.name.lowercased().contains(searchText.lowercased())
-//            }
-//        }
-//        tableView.reloadData()
-//    }
-//    
-//    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-//        searchBar.text = ""
-//        searchBar.resignFirstResponder()
-//        isSearching = false
-//        filteredProducts = []
-//        tableView.reloadData()
-//    }
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
             if searchText.isEmpty {
                 isSearching = false
