@@ -19,6 +19,11 @@ struct DummyProduct: Codable {
 //    let rating: Double
     let images: [String]
     
+    let rating: Double
+    let availabilityStatus: String
+    let discountPercentage: Double
+    let category: String
+    
     var paddedImages: [String] {
            guard !images.isEmpty else { return [] }
            var result = images

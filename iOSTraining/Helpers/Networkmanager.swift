@@ -23,7 +23,7 @@ class NetworkManager {
     private init() {}
     
     func fetchProducts() {
-        guard let url = URL(string: "https://dummyjson.com/products?limit=20&select=title,price,description,images") else { return }
+        guard let url = URL(string: "https://dummyjson.com/products?limit=20&select=title,price,description,images,rating,availabilityStatus,discountPercentage,category") else { return }
 
         URLSession.shared.dataTask(with: url) { data, _, error in
             if let error = error {
