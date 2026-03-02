@@ -255,39 +255,30 @@ extension ProductListViewController: UITableViewDelegate, UITableViewDataSource 
                 productDetailVC.dummyProduct = selected // pass DummyProduct instead
                 self.navigationController?.pushViewController(productDetailVC, animated: true)
     }
-    private func showToast(message: String) {
-        let toast = UILabel()
-        toast.text = "  \(message)  "
-        toast.font = .systemFont(ofSize: 14, weight: .medium)
-        toast.textColor = .white
-        toast.backgroundColor = UIColor.black.withAlphaComponent(0.75)
-        toast.textAlignment = .center
-        toast.layer.cornerRadius = 20
-        toast.clipsToBounds = true
-        toast.alpha = 0
-        toast.numberOfLines = 0
-        toast.translatesAutoresizingMaskIntoConstraints = false
+    func showToast(message: String) {
+        let toastLabel = UILabel(frame: CGRect(x: 20,
+                                               y: view.frame.size.height - 120,
+                                               width: view.frame.size.width - 40,
+                                               height: 50))
+        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.8)
+        toastLabel.textColor = .white
+        toastLabel.textAlignment = .center
+        toastLabel.text = message
+        toastLabel.alpha = 0
+        toastLabel.layer.cornerRadius = 12
+        toastLabel.clipsToBounds = true
 
-        view.addSubview(toast)
+        view.addSubview(toastLabel)
 
-        NSLayoutConstraint.activate([
-            toast.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            toast.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
-            toast.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 40),
-            toast.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -40),
-            toast.heightAnchor.constraint(greaterThanOrEqualToConstant: 40)
-        ])
+        UIView.animate(withDuration: 0.4) {
+            toastLabel.alpha = 1
+        }
 
-        // Fade in → wait → fade out → remove
-        UIView.animate(withDuration: 0.3, animations: {
-            toast.alpha = 1
-        }, completion: { _ in
-            UIView.animate(withDuration: 0.4, delay: 1.5, animations: {
-                toast.alpha = 0
-            }, completion: { _ in
-                toast.removeFromSuperview()
-            })
-        })
+        UIView.animate(withDuration: 0.4, delay: 2.0) {
+            toastLabel.alpha = 0
+        } completion: { _ in
+            toastLabel.removeFromSuperview()
+        }
     }
     
     
@@ -326,7 +317,6 @@ extension ProductListViewController: UISearchBarDelegate {
     }
     
     // Swipe LEFT → Add to Cart
-    // Swipe LEFT → Add to Cart
     func tableView(_ tableView: UITableView,
                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
     -> UISwipeActionsConfiguration? {
@@ -336,7 +326,6 @@ extension ProductListViewController: UISearchBarDelegate {
                 ? self.filteredDummyProducts[indexPath.row]
                 : self.dummyProducts[indexPath.row]
 
-            // ✅ Add to SwiftUI CartViewModel
             let cartItem = CartItem(
                 title: product.title,
                 price: product.price,

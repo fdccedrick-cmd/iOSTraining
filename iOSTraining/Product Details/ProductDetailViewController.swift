@@ -18,12 +18,7 @@ class ProductDetailViewController: UIViewController {
     @IBOutlet weak var productCategory: UILabel!
     @IBOutlet weak var productWearableLabel: UILabel!
     @IBOutlet weak var productFeaturedButton: UILabel!
-
-    
     @IBOutlet weak var buyNowButton: UIButton!
-    
-    
-    
     @IBOutlet weak var addToCartButton: UIButton!
     
     
