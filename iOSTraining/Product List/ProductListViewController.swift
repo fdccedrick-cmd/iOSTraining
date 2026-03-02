@@ -340,7 +340,8 @@ extension ProductListViewController: UISearchBarDelegate {
             let cartItem = CartItem(
                 title: product.title,
                 price: product.price,
-                imageURL: product.images.first ?? ""
+                imageURL: product.images.first ?? "",
+                quantity: 1
             )
             CartViewModel.shared.addItem(cartItem)
 

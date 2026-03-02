@@ -12,12 +12,14 @@ struct CartItem: Identifiable, Codable {
     let title: String
     let price: Double
     let imageURL: String
-
-    init(id: UUID = UUID(), title: String, price: Double, imageURL: String) {
+    var quantity: Int
+    
+    init(id: UUID = UUID(), title: String, price: Double, imageURL: String, quantity: Int) {
         self.id = id
         self.title = title
         self.price = price
         self.imageURL = imageURL
+        self.quantity = quantity
     }
 
     var formattedPrice: String {
