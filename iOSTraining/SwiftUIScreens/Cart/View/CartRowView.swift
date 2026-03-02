@@ -53,6 +53,12 @@ struct CartRowView: View {
                     
                     Spacer()
                     
+                    Text(item.formattedPrice)
+                        .font(.system(size: 18, weight: .bold))
+                        .foregroundStyle(Color.primary)
+                    
+                    Spacer()
+                    
                     HStack(spacing: 12) {
                         Button {
                             viewModel.decreaseQuantity(at: index)

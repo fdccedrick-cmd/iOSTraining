@@ -202,13 +202,13 @@ class ProductDetailViewController: UIViewController {
                label?.layer.masksToBounds = true
                label?.textAlignment = .center
            }
-        
-        buyNowButton.backgroundColor = .systemGreen
+//        
+//        buyNowButton.backgroundColor = .systemGreen
             buyNowButton.setTitleColor(.white, for: .normal)
             buyNowButton.titleLabel?.font = .systemFont(ofSize: 16, weight: .semibold)
             buyNowButton.layer.cornerRadius = 14
             buyNowButton.layer.masksToBounds = true
-            buyNowButton.backgroundColor = .systemGreen
+//            buyNowButton.backgroundColor = .systemGreen
             
         
         addToCartButton.backgroundColor = .clear
@@ -216,7 +216,7 @@ class ProductDetailViewController: UIViewController {
             addToCartButton.titleLabel?.font = .systemFont(ofSize: 16, weight: .semibold)
             addToCartButton.layer.cornerRadius = 14
             addToCartButton.layer.borderWidth = 1.5
-            addToCartButton.layer.borderColor = UIColor.systemGreen.cgColor
+            addToCartButton.layer.borderColor = UIColor.systemGray.cgColor
     }
     private func populateData() {
         guard let product = dummyProduct else { return }
