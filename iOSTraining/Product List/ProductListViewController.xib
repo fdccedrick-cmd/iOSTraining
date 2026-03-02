@@ -41,19 +41,20 @@
                     </constraints>
                 </tableView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sEg-jd-VTk">
-                    <rect key="frame" x="335.33333333333331" y="133" width="41.666666666666686" height="34.333333333333343"/>
-                    <color key="tintColor" red="0.92156862750000001" green="0.92156862750000001" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <rect key="frame" x="350" y="133" width="27" height="34.333333333333343"/>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <state key="normal" title="Button"/>
                     <buttonConfiguration key="configuration" style="tinted" cornerStyle="dynamic">
                         <imageReference key="image" image="arrow.up.arrow.down.circle.fill" catalog="system" symbolScale="large" variableValue="1"/>
-                        <color key="baseBackgroundColor" systemColor="systemMintColor"/>
+                        <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </buttonConfiguration>
                 </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" systemColor="systemMintColor"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="sEg-jd-VTk" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="335.32999999999998" id="3K6-ob-lDd"/>
+                <constraint firstItem="sEg-jd-VTk" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="350" id="3K6-ob-lDd"/>
                 <constraint firstItem="LJA-Kg-Ab7" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="6iQ-EI-NcF"/>
                 <constraint firstItem="LJA-Kg-Ab7" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="EPi-GD-YLN"/>
                 <constraint firstAttribute="bottom" secondItem="smd-81-yeY" secondAttribute="bottom" id="Eij-oR-bbJ"/>

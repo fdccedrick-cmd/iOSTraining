@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import SwiftUI
+import Combine
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -17,10 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
             
     func showLoginScreen(animated: Bool = false) {
-        let loginViewController = SigninViewController(
-            nibName: String(describing: SigninViewController.self),
-            bundle: nil
-        )
+        let loginViewController = UIHostingController(rootView: LoginView())
         
         setRootViewController(loginViewController, animated: animated)
     }

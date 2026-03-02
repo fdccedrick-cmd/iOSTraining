@@ -79,6 +79,8 @@ struct CartRowView: View {
                                 .clipShape(Circle())
                                 .foregroundColor(.primary)
                         }
+                        
+                       
                     }
                 }
                 
