@@ -11,13 +11,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
-    
     func showProductList(animated: Bool = false) {
         let viewController = ProductListViewController()
             setRootViewController(viewController, animated: animated)
         }
             
-    
     func showLoginScreen(animated: Bool = false) {
         let loginViewController = SigninViewController(
             nibName: String(describing: SigninViewController.self),
@@ -26,10 +24,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         setRootViewController(loginViewController, animated: animated)
     }
+    
     func showMainApp(animated: Bool = true) {
         let tabBar = MainTabBarController()
         setRootViewController(tabBar, animated: animated)
     }
+    
     func logout(animated: Bool = true) {
         UserDefaults.standard.set(false, forKey: "isLoggedIn")
         UserDefaults.standard.removeObject(forKey: "email")

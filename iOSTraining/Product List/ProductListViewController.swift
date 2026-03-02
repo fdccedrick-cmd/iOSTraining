@@ -326,6 +326,7 @@ extension ProductListViewController: UISearchBarDelegate {
     }
     
     // Swipe LEFT → Add to Cart
+    // Swipe LEFT → Add to Cart
     func tableView(_ tableView: UITableView,
                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
     -> UISwipeActionsConfiguration? {
@@ -335,12 +336,13 @@ extension ProductListViewController: UISearchBarDelegate {
                 ? self.filteredDummyProducts[indexPath.row]
                 : self.dummyProducts[indexPath.row]
 
-            // ✅ Add to CartViewController
-            if let tabBar = self.tabBarController,
-               let cartNav = tabBar.viewControllers?[2] as? UINavigationController,
-               let cartVC = cartNav.viewControllers.first as? CartViewController {
-                cartVC.addToCart(product)
-            }
+            // ✅ Add to SwiftUI CartViewModel
+            let cartItem = CartItem(
+                title: product.title,
+                price: product.price,
+                imageURL: product.images.first ?? ""
+            )
+            CartViewModel.shared.addItem(cartItem)
 
             self.showToast(message: "🛒 \(product.title) added to cart")
             completion(true)

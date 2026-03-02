@@ -4,8 +4,9 @@
 //
 //  Created by Cedrick Agtong - INTERN on 2/26/26.
 //
-
+import Combine
 import UIKit
+import SwiftUI
 
 class MainTabBarController: UITabBarController {
     
@@ -35,8 +36,8 @@ class MainTabBarController: UITabBarController {
             tag: 1
         )
         
-        // ✅ Tab 3 - Cart (no XIB)
-        let cartVC = CartViewController()
+     
+        let cartVC = UIHostingController(rootView: CartView())
         cartVC.view.backgroundColor = .systemBackground
         cartVC.title = "Cart"
         let cartNav = UINavigationController(rootViewController: cartVC)
