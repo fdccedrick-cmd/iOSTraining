@@ -144,7 +144,7 @@ struct CheckoutView: View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
                 Image(systemName: "bag.fill")
-                    .foregroundColor(.orange)
+                    .foregroundColor(.black)
                     .font(.system(size: 18))
                 
                 Text("Order Items")
@@ -152,17 +152,17 @@ struct CheckoutView: View {
                 
                 Spacer()
                 
-                Text("\(viewModel.itemCount) items")
+                Text("\(viewModel.selectedItemCount) items")
                     .font(.system(size: 14))
                     .foregroundColor(.secondary)
             }
             
             Divider()
             
-            ForEach(viewModel.items.indices, id: \.self) { index in
-                CheckoutItemRow(item: viewModel.items[index])
+            ForEach(viewModel.selectedItems.indices, id: \.self) { index in
+                CheckoutItemRow(item: viewModel.selectedItems[index])
                 
-                if index < viewModel.items.count - 1 {
+                if index < viewModel.selectedItems.count - 1 {
                     Divider()
                 }
             }
@@ -383,7 +383,7 @@ struct CheckoutItemRow: View {
             
             Text(String(format: "₱%.2f", item.price * Double(item.quantity)))
                 .font(.system(size: 14, weight: .semibold))
-                .foregroundColor(.orange)
+                .foregroundColor(.black)
         }
     }
 }
@@ -399,7 +399,7 @@ struct PaymentMethodOption: View {
         Button(action: action) {
             HStack(spacing: 12) {
                 Image(systemName: icon)
-                    .foregroundColor(isSelected ? .orange : .gray)
+                    .foregroundColor(isSelected ? .black : .gray)
                     .font(.system(size: 20))
                     .frame(width: 30)
                 
@@ -416,17 +416,17 @@ struct PaymentMethodOption: View {
                 Spacer()
                 
                 Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
-                    .foregroundColor(isSelected ? .orange : .gray.opacity(0.3))
+                    .foregroundColor(isSelected ? .black : .gray.opacity(0.3))
                     .font(.system(size: 22))
             }
             .padding(12)
             .background(
                 RoundedRectangle(cornerRadius: 8)
-                    .fill(isSelected ? Color.orange.opacity(0.05) : Color(.systemGray6))
+                    .fill(isSelected ? Color.black.opacity(0.05) : Color(.systemGray6))
             )
             .overlay(
                 RoundedRectangle(cornerRadius: 8)
-                    .stroke(isSelected ? Color.orange : Color.clear, lineWidth: 1.5)
+                    .stroke(isSelected ? Color.black : Color.clear, lineWidth: 1.5)
             )
         }
     }

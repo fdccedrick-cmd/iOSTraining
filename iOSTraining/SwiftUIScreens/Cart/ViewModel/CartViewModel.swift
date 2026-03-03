@@ -50,6 +50,14 @@ class CartViewModel: ObservableObject {
     var isEmpty: Bool { items.isEmpty }
     var itemCount: Int { items.reduce(0) { $0 + $1.quantity} }
     
+    var selectedItems: [CartItem] {
+        items.filter { $0.isSelected }
+    }
+    
+    var selectedItemCount: Int {
+        selectedItems.reduce(0) { $0 + $1.quantity }
+    }
+    
     func addItem(_ item: CartItem) {
         if let index =  items.firstIndex(where: { $0.title == item.title}){
             items[index].quantity += 1
@@ -89,7 +97,8 @@ class CartViewModel: ObservableObject {
     }
 
     func confirmCheckout() {
-        clearCart()
+        // Remove only selected items from cart
+        items.removeAll { $0.isSelected }
         showCheckoutView = false
     }
     

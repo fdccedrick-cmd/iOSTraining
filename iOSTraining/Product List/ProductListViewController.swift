@@ -373,6 +373,13 @@ extension ProductListViewController: NetworkManagerDelegate {
         originalDummyProducts = products  // Store original order for "Featured" sort
         tableView.refreshControl?.endRefreshing()
         tableView.reloadData()
+        
+        // Post notification to update products badge
+        NotificationCenter.default.post(
+            name: NSNotification.Name("ProductsCountUpdated"),
+            object: nil,
+            userInfo: ["count": products.count]
+        )
     }
 
     func didFailWithError(_ error: Error) {
