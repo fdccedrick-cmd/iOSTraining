@@ -12,34 +12,31 @@ struct CartView: View {
     @FocusState private var promoFocused: Bool
 
     var body: some View {
-   
-            ZStack(alignment: .bottom) {
-                Color(.systemGray6).ignoresSafeArea()
-                
-                if viewModel.isEmpty {
-                    emptyStateView
-                } else {
-                    ScrollView {
-                        VStack(spacing: 16) {
-                            cartHeaderView
-                            cartItemsCard
-                            promoCodeCard
-                            summaryCard
-                            Spacer().frame(height: 90)
-                        }
-                        .padding(.horizontal, 16)
-                        .padding(.top, 8)
+        ZStack(alignment: .bottom) {
+            Color(.systemGray6)
+                .ignoresSafeArea()
+            
+            if viewModel.isEmpty {
+                emptyStateView
+            } else {
+                ScrollView {
+                    VStack(spacing: 16) {
+                        cartHeaderView
+                        cartItemsCard
+                        promoCodeCard
+                        summaryCard
+                        Spacer().frame(height: 90)
                     }
-                    
-                    checkoutButton
+                    .padding(.horizontal, 16)
+                    .padding(.top, 8)
                 }
+                
+                checkoutButton
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity) // ← KEY FIX
-            .toolbar(.hidden, for: .navigationBar)
-            .navigationDestination(isPresented: $viewModel.showCheckoutView) {
-                CheckoutView()
-            }
-        
+        }
+        .fullScreenCover(isPresented: $viewModel.showCheckoutView) {
+            CheckoutView()
+        }
     }
 
     // MARK: - Header

@@ -21,37 +21,36 @@ struct CheckoutView: View {
         ZStack {
             Color(.systemGray6).ignoresSafeArea()
             
-            ScrollView {
-                VStack(spacing: 12) {
-                    // Shipping Address Card
-                    shippingAddressCard
-                    
-                    // Order Items Card
-                    orderItemsCard
-                    
-                    // Payment Method Card
-                    paymentMethodCard
-                    
-                    // Order Summary Card
-                    orderSummaryCard
-                    
-                    Spacer().frame(height: 100) // Space for button
+            VStack(spacing: 0) {
+                // Custom Navigation Bar
+                customNavigationBar
+                
+                ScrollView {
+                    VStack(spacing: 12) {
+                        // Shipping Address Card
+                        shippingAddressCard
+                        
+                        // Order Items Card
+                        orderItemsCard
+                        
+                        // Payment Method Card
+                        paymentMethodCard
+                        
+                        // Order Summary Card
+                        orderSummaryCard
+                        
+                        Spacer().frame(height: 100) // Space for button
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.top, 16)
                 }
-                .padding(.horizontal, 16)
-                .padding(.top, 16)
+                
+                Spacer()
             }
             
             VStack {
                 Spacer()
                 placeOrderButton
-            }
-        }
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationBarBackButtonHidden(false)
-        .toolbar {
-            ToolbarItem(placement: .principal) {
-                Text("Checkout")
-                    .font(.system(size: 18, weight: .semibold))
             }
         }
         .alert("Order Placed Successfully! 🎉", isPresented: $showSuccessAlert) {
@@ -64,12 +63,46 @@ struct CheckoutView: View {
         }
     }
     
+    // MARK: - Custom Navigation Bar
+    private var customNavigationBar: some View {
+        HStack {
+            Button(action: { dismiss() }) {
+                HStack(spacing: 4) {
+                    Image(systemName: "chevron.left")
+                        .font(.system(size: 16, weight: .semibold))
+                    Text("Back")
+                        .font(.system(size: 17))
+                }
+                .foregroundColor(.black)
+            }
+            
+            Spacer()
+            
+            Text("Checkout")
+                .font(.system(size: 18, weight: .semibold))
+            
+            Spacer()
+            
+            // Invisible placeholder for balance
+            HStack(spacing: 4) {
+                Image(systemName: "chevron.left")
+                    .font(.system(size: 16, weight: .semibold))
+                Text("Back")
+                    .font(.system(size: 17))
+            }
+            .opacity(0)
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 12)
+        .background(Color(.systemBackground))
+    }
+    
     // MARK: - Shipping Address Card
     private var shippingAddressCard: some View {
         VStack(alignment: .leading, spacing: 16) {
             HStack {
                 Image(systemName: "location.fill")
-                    .foregroundColor(.orange)
+                    .foregroundColor(.black)
                     .font(.system(size: 18))
                 
                 Text("Shipping Address")
@@ -145,7 +178,7 @@ struct CheckoutView: View {
         VStack(alignment: .leading, spacing: 16) {
             HStack {
                 Image(systemName: "creditcard.fill")
-                    .foregroundColor(.orange)
+                    .foregroundColor(.black)
                     .font(.system(size: 18))
                 
                 Text("Payment Method")
@@ -194,7 +227,7 @@ struct CheckoutView: View {
         VStack(alignment: .leading, spacing: 16) {
             HStack {
                 Image(systemName: "doc.text.fill")
-                    .foregroundColor(.orange)
+                    .foregroundColor(.black)
                     .font(.system(size: 18))
                 
                 Text("Order Summary")
@@ -217,7 +250,7 @@ struct CheckoutView: View {
                     
                     Text(viewModel.formattedTotal)
                         .font(.system(size: 20, weight: .bold))
-                        .foregroundColor(.orange)
+                        .foregroundColor(.black)
                 }
             }
         }
@@ -259,13 +292,13 @@ struct CheckoutView: View {
             .frame(height: 56)
             .background(
                 LinearGradient(
-                    colors: [Color.orange, Color.orange.opacity(0.8)],
+                    colors: [Color.black, Color.gray],
                     startPoint: .leading,
                     endPoint: .trailing
                 )
             )
             .clipShape(RoundedRectangle(cornerRadius: 28))
-            .shadow(color: Color.orange.opacity(0.3), radius: 10, x: 0, y: 5)
+            .shadow(color: Color.black.opacity(0.3), radius: 10, x: 0, y: 5)
         }
         .disabled(!isFormValid)
         .opacity(isFormValid ? 1.0 : 0.5)
@@ -406,7 +439,5 @@ enum PaymentMethod {
 }
 
 #Preview {
-    NavigationStack {
-        CheckoutView()
-    }
+    CheckoutView()
 }

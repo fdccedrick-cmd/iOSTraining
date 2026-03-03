@@ -83,10 +83,8 @@ class MainTabBarController: UITabBarController {
             tag: 1
         )
 
-        let cartVC = UIHostingController(rootView:  CartView())
-        cartVC.title = "Cart"
-        let cartNav = UINavigationController(rootViewController: cartVC)
-        cartNav.tabBarItem = UITabBarItem(
+        let cartVC = UIHostingController(rootView: CartView())
+        cartVC.tabBarItem = UITabBarItem(
             title: "Cart",
             image: UIImage(systemName: "cart"),
             tag: 2
@@ -100,6 +98,6 @@ class MainTabBarController: UITabBarController {
             tag: 3
         )
 
-        viewControllers = [productsNav, favoritesNav, cartNav, profileNav]
+        viewControllers = [productsNav, favoritesNav, cartVC, profileNav]
     }
 }
