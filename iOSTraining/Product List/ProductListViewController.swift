@@ -255,29 +255,13 @@ extension ProductListViewController: UITableViewDelegate, UITableViewDataSource 
                 productDetailVC.dummyProduct = selected // pass DummyProduct instead
                 self.navigationController?.pushViewController(productDetailVC, animated: true)
     }
-    func showToast(message: String) {
-        let toastLabel = UILabel(frame: CGRect(x: 20,
-                                               y: view.frame.size.height - 120,
-                                               width: view.frame.size.width - 40,
-                                               height: 50))
-        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.8)
-        toastLabel.textColor = .white
-        toastLabel.textAlignment = .center
-        toastLabel.text = message
-        toastLabel.alpha = 0
-        toastLabel.layer.cornerRadius = 12
-        toastLabel.clipsToBounds = true
+    
+    func showAutoDismissAlert(message: String, delay: TimeInterval = 1.2) {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        self.present(alert, animated: true)
 
-        view.addSubview(toastLabel)
-
-        UIView.animate(withDuration: 0.4) {
-            toastLabel.alpha = 1
-        }
-
-        UIView.animate(withDuration: 0.4, delay: 2.0) {
-            toastLabel.alpha = 0
-        } completion: { _ in
-            toastLabel.removeFromSuperview()
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+            alert.dismiss(animated: true)
         }
     }
     
@@ -334,7 +318,7 @@ extension ProductListViewController: UISearchBarDelegate {
             )
             CartViewModel.shared.addItem(cartItem)
 
-            self.showToast(message: "🛒 \(product.title) added to cart")
+            self.showAutoDismissAlert(message: "🛒 \(product.title) added to cart")
             completion(true)
         }
 
@@ -353,14 +337,15 @@ extension ProductListViewController: UISearchBarDelegate {
                 ? self.filteredDummyProducts[indexPath.row]
                 : self.dummyProducts[indexPath.row]
 
-            // ✅ Get FavoritesViewController from tab bar and add product
-            if let tabBar = self.tabBarController,
-               let favNav = tabBar.viewControllers?[1] as? UINavigationController,
-               let favVC = favNav.viewControllers.first as? FavoritesViewController {
-                favVC.addFavorite(product)
-            }
-    
-            self.showToast(message: "❤️ \(product.title) added to favorites")
+            let favoriteItem = FavoriteItem(
+                title: product.title,
+                price: product.price,
+                imageURL: product.images.first ?? "",
+                category: product.category,
+                rating: product.rating
+            )
+            FavoritesViewModel.shared.addItem(favoriteItem)
+            self.showAutoDismissAlert(message: "🛒 \(product.title) added to favorites")
             completion(true)
         }
 

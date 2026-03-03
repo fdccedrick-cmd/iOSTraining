@@ -18,7 +18,7 @@ struct CartRowView: View {
                 
                 //Image
                 AsyncImage(url: URL(string: item.imageURL)) { image in
-                    image.resizable().scaledToFill()
+                    image.resizable().scaledToFit()
                 } placeholder: {
                     RoundedRectangle(cornerRadius: 12)
                         .fill(Color.gray.opacity(0.12))

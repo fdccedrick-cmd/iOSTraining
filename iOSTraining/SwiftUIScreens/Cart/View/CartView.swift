@@ -12,27 +12,29 @@ struct CartView: View {
     @FocusState private var promoFocused: Bool
 
     var body: some View {
-        ZStack(alignment: .bottom) {
-            Color(.systemGray6).ignoresSafeArea()
-
-            if viewModel.isEmpty {
-                emptyStateView
-            } else {
-                ScrollView {
-                    VStack(spacing: 16) {
-                        cartHeaderView
-                        cartItemsCard
-                        promoCodeCard
-                        summaryCard
-                        Spacer().frame(height: 90) // space for checkout button
+       
+            ZStack(alignment: .bottom) {
+                Color(.systemGray6).ignoresSafeArea()
+                
+                if viewModel.isEmpty {
+                    emptyStateView
+                } else {
+                    ScrollView {
+                        VStack(spacing: 16) {
+                            cartHeaderView
+                            cartItemsCard
+                            promoCodeCard
+                            summaryCard
+                            Spacer().frame(height: 90) // space for checkout button
+                        }
+                        .padding(.horizontal, 16)
+                        .padding(.top, 8)
                     }
-                    .padding(.horizontal, 16)
-                    .padding(.top, 8)
+                    
+                    checkoutButton
                 }
-
-                checkoutButton
             }
-        }
+        
         .navigationBarHidden(true)
         .alert("Confirm Order 🛍️", isPresented: $viewModel.showCheckoutAlert) {
             Button("Cancel", role: .cancel) {}
@@ -57,7 +59,7 @@ struct CartView: View {
 
             Spacer()
 
-            // Clear button
+           
             Button {
                 viewModel.clearCart()
             } label: {
@@ -84,7 +86,7 @@ struct CartView: View {
         .clipShape(RoundedRectangle(cornerRadius: 16))
     }
 
-    // MARK: - Promo Code Card
+   
     private var promoCodeCard: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("Promo Code")
@@ -123,7 +125,7 @@ struct CartView: View {
         }
     }
 
-    // MARK: - Summary Card
+    
     private var summaryCard: some View {
         VStack(spacing: 0) {
             summaryRow(title: "Subtotal", value: viewModel.formattedSubtotal, isBold: false)
@@ -154,7 +156,7 @@ struct CartView: View {
         .padding(.vertical, 14)
     }
 
-    // MARK: - Checkout Button
+    
     private var checkoutButton: some View {
         Button(action: viewModel.checkout) {
             HStack {
@@ -185,7 +187,7 @@ struct CartView: View {
         }
     }
 
-    // MARK: - Empty State
+   
     private var emptyStateView: some View {
         VStack(spacing: 16) {
             Spacer()

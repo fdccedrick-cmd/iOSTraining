@@ -51,17 +51,7 @@ class ProductDetailViewController: UIViewController {
         let nameTap = UITapGestureRecognizer(target: self, action: #selector(didTapProductName))
         productName.addGestureRecognizer(nameTap)
 
-//        if let product = product {
-//            self.title = product.name
-//            productName.text = product.name
-//            productPrice.text = "₱\(product.price)"
-//            productDescription.text = product.description
-//            pageControl.numberOfPages = product.images.count
-//            pageControl.currentPage = 0
-//            pageControl.currentPageIndicatorTintColor = .systemGreen
-//            pageControl.pageIndicatorTintColor = .systemGray3
-//            carouselCollectionView.reloadData()
-//        }
+
         if let product = dummyProduct {
                     self.title = product.title
                     productName.text = product.title
@@ -89,6 +79,20 @@ class ProductDetailViewController: UIViewController {
                                                                                                 
    
     }
+    
+    @IBAction func didTapAddToCart(_ sender: Any) {
+        guard let product = dummyProduct else { return }
+        
+        let cartItem = CartItem(
+            title: product.title,
+            price: product.price,
+            imageURL: product.images.first ?? "",
+            quantity: 1
+        )
+        CartViewModel.shared.addItem(cartItem)
+        showToast(message: "\(product.title) added to Cart. ")
+    }
+    
     
     @objc private func pageControlTapped(_ sender: UIPageControl) {
         let indexPath = IndexPath(item: sender.currentPage, section: 0)
@@ -188,6 +192,40 @@ class ProductDetailViewController: UIViewController {
         })
     }
     
+    private func showToast(message: String) {
+        let toast = UILabel()
+        toast.text = "  \(message)  "
+        toast.font = .systemFont(ofSize: 14, weight: .medium)
+        toast.textColor = .white
+        toast.backgroundColor = UIColor.black.withAlphaComponent(0.75)
+        toast.textAlignment = .center
+        toast.layer.cornerRadius = 20
+        toast.clipsToBounds = true
+        toast.alpha = 0
+        toast.numberOfLines = 0
+        toast.translatesAutoresizingMaskIntoConstraints = false
+
+        view.addSubview(toast)
+
+        NSLayoutConstraint.activate([
+            toast.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            toast.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            toast.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 40),
+            toast.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -40),
+            toast.heightAnchor.constraint(greaterThanOrEqualToConstant: 40)
+        ])
+
+        UIView.animate(withDuration: 0.3, animations: {
+            toast.alpha = 1
+        }, completion: { _ in
+            UIView.animate(withDuration: 0.4, delay: 1.5, animations: {
+                toast.alpha = 0
+            }, completion: { _ in
+                toast.removeFromSuperview()
+            })
+        })
+    }
+    
     private func setupAppearance() {
         [productCategory, productWearableLabel, productFeaturedButton].forEach { label in
                label?.font = .systemFont(ofSize: 11, weight: .semibold)
@@ -255,6 +293,18 @@ class ProductDetailViewController: UIViewController {
             layout.invalidateLayout()          // ← ADDED
         }
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = true
+        extendedLayoutIncludesOpaqueBars = true
+        edgesForExtendedLayout = .all
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        tabBarController?.tabBar.isHidden = false
+        
+    }
 }
 
 // MARK: - CollectionView DataSource
@@ -273,9 +323,6 @@ extension ProductDetailViewController: UICollectionViewDataSource {
             for: indexPath
         ) as! CarouselCollectionViewCell
 
-//        if let imageName = product?.images[indexPath.item] {
-//            cell.configure(with: imageName)
-//        }
         // ✅ Load image from URL string
         if let urlString = dummyProduct?.paddedImages[indexPath.item], // ✅
                let url = URL(string: urlString) {
@@ -283,6 +330,7 @@ extension ProductDetailViewController: UICollectionViewDataSource {
             }
         return cell
     }
+    
 }
 
 // MARK: - CollectionView Delegate
