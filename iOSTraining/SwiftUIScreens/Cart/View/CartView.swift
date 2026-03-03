@@ -12,7 +12,7 @@ struct CartView: View {
     @FocusState private var promoFocused: Bool
 
     var body: some View {
-       
+   
             ZStack(alignment: .bottom) {
                 Color(.systemGray6).ignoresSafeArea()
                 
@@ -25,7 +25,7 @@ struct CartView: View {
                             cartItemsCard
                             promoCodeCard
                             summaryCard
-                            Spacer().frame(height: 90) // space for checkout button
+                            Spacer().frame(height: 90)
                         }
                         .padding(.horizontal, 16)
                         .padding(.top, 8)
@@ -34,14 +34,12 @@ struct CartView: View {
                     checkoutButton
                 }
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity) // ← KEY FIX
+            .toolbar(.hidden, for: .navigationBar)
+            .navigationDestination(isPresented: $viewModel.showCheckoutView) {
+                CheckoutView()
+            }
         
-        .navigationBarHidden(true)
-        .alert("Confirm Order 🛍️", isPresented: $viewModel.showCheckoutAlert) {
-            Button("Cancel", role: .cancel) {}
-            Button("Confirm") { viewModel.confirmCheckout() }
-        } message: {
-            Text("Total: \(viewModel.formattedTotal)\nProceed with your order?")
-        }
     }
 
     // MARK: - Header
@@ -207,5 +205,7 @@ struct CartView: View {
 }
 
 #Preview {
-    CartView()
+   
+        CartView()
+   
 }

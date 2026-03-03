@@ -75,7 +75,7 @@ class MainTabBarController: UITabBarController {
             tag: 0
         )
 
-        let favoritesVC = UIHostingController(rootView: FavoritesView() )
+        let favoritesVC = UIHostingController(rootView:   FavoritesView() )
         let favoritesNav = UINavigationController(rootViewController: favoritesVC)
         favoritesNav.tabBarItem = UITabBarItem(
             title: "Favorites",
@@ -83,7 +83,7 @@ class MainTabBarController: UITabBarController {
             tag: 1
         )
 
-        let cartVC = UIHostingController(rootView: CartView())
+        let cartVC = UIHostingController(rootView:  CartView())
         cartVC.title = "Cart"
         let cartNav = UINavigationController(rootViewController: cartVC)
         cartNav.tabBarItem = UITabBarItem(

@@ -16,7 +16,7 @@ class CartViewModel: ObservableObject {
             saveToUserDefaults()
         }
     }
-    @Published var showCheckoutAlert: Bool = false
+    @Published var showCheckoutView: Bool = false
     @Published var promoCode: String = ""
     @Published var promoApplied: Bool = false
 
@@ -75,11 +75,12 @@ class CartViewModel: ObservableObject {
     }
 
     func checkout() {
-        showCheckoutAlert = true
+        showCheckoutView = true
     }
 
     func confirmCheckout() {
         clearCart()
+        showCheckoutView = false
     }
     
     func applyPromo() {
