@@ -22,6 +22,7 @@ struct CartView: View {
                 ScrollView {
                     VStack(spacing: 16) {
                         cartHeaderView
+                        selectAllView
                         cartItemsCard
                         promoCodeCard
                         summaryCard
@@ -64,6 +65,32 @@ struct CartView: View {
             }
         }
         .padding(.top, 8)
+    }
+    
+    // MARK: - Select All
+    private var selectAllView: some View {
+        HStack {
+            Button {
+                if viewModel.allItemsSelected {
+                    viewModel.deselectAllItems()
+                } else {
+                    viewModel.selectAllItems()
+                }
+            } label: {
+                HStack(spacing: 8) {
+                    Image(systemName: viewModel.allItemsSelected ? "checkmark.circle.fill" : "circle")
+                        .font(.system(size: 20))
+                        .foregroundColor(viewModel.allItemsSelected ? .black : .gray)
+                    
+                    Text(viewModel.allItemsSelected ? "Deselect All" : "Select All")
+                        .font(.system(size: 15, weight: .medium))
+                        .foregroundColor(.primary)
+                }
+            }
+            
+            Spacer()
+        }
+        .padding(.horizontal, 4)
     }
 
     // MARK: - Cart Items Card
@@ -175,11 +202,12 @@ struct CartView: View {
             .padding(.horizontal, 24)
             .frame(maxWidth: .infinity)
             .frame(height: 60)
-            .background(Color.black)
+            .background(viewModel.hasSelectedItems ? Color.black : Color.gray)
             .clipShape(RoundedRectangle(cornerRadius: 30))
             .padding(.horizontal, 16)
             .padding(.bottom, 24)
         }
+        .disabled(!viewModel.hasSelectedItems)
     }
 
    

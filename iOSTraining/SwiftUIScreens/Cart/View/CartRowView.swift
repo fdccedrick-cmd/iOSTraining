@@ -16,6 +16,15 @@ struct CartRowView: View {
         VStack(spacing: 0) {
             HStack(alignment: .top, spacing: 14){
                 
+                // Checkbox
+                Button {
+                    viewModel.toggleItemSelection(at: index)
+                } label: {
+                    Image(systemName: item.isSelected ? "checkmark.circle.fill" : "circle")
+                        .font(.system(size: 24))
+                        .foregroundColor(item.isSelected ? .black : .gray)
+                }
+                
                 //Image
                 AsyncImage(url: URL(string: item.imageURL)) { image in
                     image.resizable().scaledToFit()

@@ -13,6 +13,7 @@ struct CartItem: Identifiable, Codable {
     let price: Double
     let imageURL: String
     var quantity: Int
+    var isSelected: Bool = false
     
     var formattedPrice: String {
         String(format: "₱%.2f", price)

@@ -47,7 +47,8 @@ class FavoritesViewModel: ObservableObject {
             title: item.title,
             price: item.price,
             imageURL: item.imageURL,
-            quantity: 1
+            quantity: 1,
+            isSelected: false
         )
         
         CartViewModel.shared.addItem(cartItem)

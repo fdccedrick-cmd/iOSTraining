@@ -32,6 +32,7 @@ class ProductListViewController: UIViewController {
     
     var dummyProducts: [DummyProduct] = []
     var filteredDummyProducts: [DummyProduct] = []
+    var originalDummyProducts: [DummyProduct] = []
     
     
     enum SortOption {
@@ -170,23 +171,22 @@ class ProductListViewController: UIViewController {
 
         switch option {
         case .featured:
-            // Static — reset to original order
-           
-            products = originalProducts
+            // Reset to original order
+            dummyProducts = originalDummyProducts
 
         case .nameAZ:
-            products.sort { $0.name < $1.name }
+            dummyProducts.sort { $0.title < $1.title }
 
         case .priceLowToHigh:
-            products.sort { $0.price < $1.price }
+            dummyProducts.sort { $0.price < $1.price }
 
         case .topRated:
-            break // Static — no reordering
+            dummyProducts.sort { $0.rating > $1.rating }
         }
 
         if isSearching, let text = productSearch.text {
-            filteredProducts = products.filter {
-                $0.name.lowercased().contains(text.lowercased())
+            filteredDummyProducts = dummyProducts.filter {
+                $0.title.lowercased().contains(text.lowercased())
             }
         }
 
@@ -314,7 +314,8 @@ extension ProductListViewController: UISearchBarDelegate {
                 title: product.title,
                 price: product.price,
                 imageURL: product.images.first ?? "",
-                quantity: 1
+                quantity: 1,
+                isSelected: false
             )
             CartViewModel.shared.addItem(cartItem)
 
@@ -369,6 +370,7 @@ extension ProductListViewController: NetworkManagerDelegate {
 
     func didFetchProducts(_ products: [DummyProduct]) {
         dummyProducts = products
+        originalDummyProducts = products  // Store original order for "Featured" sort
         tableView.refreshControl?.endRefreshing()
         tableView.reloadData()
     }

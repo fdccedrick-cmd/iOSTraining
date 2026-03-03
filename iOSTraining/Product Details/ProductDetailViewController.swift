@@ -87,7 +87,8 @@ class ProductDetailViewController: UIViewController {
             title: product.title,
             price: product.price,
             imageURL: product.images.first ?? "",
-            quantity: 1
+            quantity: 1,
+            isSelected: false
         )
         CartViewModel.shared.addItem(cartItem)
         showToast(message: "\(product.title) added to Cart. ")

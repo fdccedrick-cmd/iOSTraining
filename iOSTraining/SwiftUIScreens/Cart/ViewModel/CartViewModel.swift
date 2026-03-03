@@ -29,11 +29,19 @@ class CartViewModel: ObservableObject {
     }
     
     var subTotal: Double {
-        items.reduce(0) { $0 + ($1.price * Double($1.quantity)) }
+        items.filter { $0.isSelected }.reduce(0) { $0 + ($1.price * Double($1.quantity)) }
     }
     
     var total: Double {
         subTotal + shippingFee
+    }
+    
+    var hasSelectedItems: Bool {
+        items.contains { $0.isSelected }
+    }
+    
+    var allItemsSelected: Bool {
+        !items.isEmpty && items.allSatisfy { $0.isSelected }
     }
 
     var formattedSubtotal: String { String(format: "₱%.2f" , subTotal) }
@@ -46,7 +54,9 @@ class CartViewModel: ObservableObject {
         if let index =  items.firstIndex(where: { $0.title == item.title}){
             items[index].quantity += 1
         } else {
-            items.append(item)
+            var newItem = item
+            newItem.isSelected = false
+            items.append(newItem)
         }
     }
     
@@ -85,6 +95,23 @@ class CartViewModel: ObservableObject {
     
     func applyPromo() {
         promoApplied = !promoCode.isEmpty
+    }
+    
+    func toggleItemSelection(at index: Int) {
+        guard index < items.count else { return }
+        items[index].isSelected.toggle()
+    }
+    
+    func selectAllItems() {
+        for index in items.indices {
+            items[index].isSelected = true
+        }
+    }
+    
+    func deselectAllItems() {
+        for index in items.indices {
+            items[index].isSelected = false
+        }
     }
     
     private func saveToUserDefaults() {
