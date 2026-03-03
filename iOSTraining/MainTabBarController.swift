@@ -42,14 +42,12 @@ class MainTabBarController: UITabBarController {
             .font: UIFont.systemFont(ofSize: 10, weight: .semibold)
         ]
 
-        // ✅ Unselected item — medium gray
         appearance.stackedLayoutAppearance.normal.iconColor = UIColor(white: 0.6, alpha: 1.0)
         appearance.stackedLayoutAppearance.normal.titleTextAttributes = [
             .foregroundColor: UIColor(white: 0.6, alpha: 1.0),
             .font: UIFont.systemFont(ofSize: 10, weight: .regular)
         ]
         
-        // ✅ Badge appearance
         appearance.stackedLayoutAppearance.normal.badgeBackgroundColor = .systemRed
         appearance.stackedLayoutAppearance.selected.badgeBackgroundColor = .systemRed
         appearance.stackedLayoutAppearance.normal.badgeTextAttributes = [
@@ -59,7 +57,6 @@ class MainTabBarController: UITabBarController {
             .font: UIFont.systemFont(ofSize: 12, weight: .semibold)
         ]
 
-        // ✅ Top border line
         _ = UIView()
         let borderColor = UIColor(white: 0.88, alpha: 1.0)
         appearance.shadowColor = borderColor
@@ -71,7 +68,6 @@ class MainTabBarController: UITabBarController {
         tabBar.tintColor = .black
         tabBar.unselectedItemTintColor = UIColor(white: 0.6, alpha: 1.0)
 
-        // ✅ Subtle shadow on top
         tabBar.layer.shadowColor = UIColor.black.cgColor
         tabBar.layer.shadowOpacity = 0.06
         tabBar.layer.shadowOffset = CGSize(width: 0, height: -1)
@@ -142,7 +138,6 @@ class MainTabBarController: UITabBarController {
             object: nil
         )
         
-        // Initial badge update
         updateAllBadges()
     }
     
@@ -182,7 +177,6 @@ class MainTabBarController: UITabBarController {
     }
     
     private func updateProductsBadgeFromCurrentData() {
-        // Try to get product count from ProductListViewController
         guard let productsNav = viewControllers?[0] as? UINavigationController,
               let productListVC = productsNav.viewControllers.first as? ProductListViewController else {
             return
