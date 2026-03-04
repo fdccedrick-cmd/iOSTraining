@@ -15,10 +15,7 @@ struct DummyProduct: Codable {
     let title: String
     let price: Double
     let description: String
-//    let category: String
-//    let rating: Double
     let images: [String]
-    
     let rating: Double
     let availabilityStatus: String
     let discountPercentage: Double

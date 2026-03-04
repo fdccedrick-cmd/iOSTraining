@@ -373,7 +373,8 @@ extension ProductListViewController: NetworkManagerDelegate {
         originalDummyProducts = products  // Store original order for "Featured" sort
         tableView.refreshControl?.endRefreshing()
         tableView.reloadData()
-        
+        FlashSaleViewModel.shared.loadSaleItems(from: products)
+        HomeViewModel.shared.loadProducts(products)
         // Post notification to update products badge
         NotificationCenter.default.post(
             name: NSNotification.Name("ProductsCountUpdated"),
