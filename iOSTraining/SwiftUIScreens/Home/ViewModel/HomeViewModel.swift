@@ -75,8 +75,27 @@ class HomeViewModel: ObservableObject {
 
     init() {
         startBannerAutoScroll()
+        fetchProducts()
     }
 
+    func fetchProducts() {
+        isLoading = true
+        NetworkManager.shared.fetchProducts { [weak self] result in
+            guard let self = self else { return }
+            self.isLoading = false
+
+            switch result {
+            case .success(let products):
+                self.featuredProducts = Array(products.prefix(6))
+                self.trendingProducts = products.sorted { $0.rating > $1.rating }
+
+                FlashSaleViewModel.shared.loadSaleItems(from: products)
+
+            case .failure(let error):
+                print("HomeViewModel fetch error: \(error.localizedDescription)")
+            }
+        }
+    }
     func loadProducts(_ products: [DummyProduct]) {
         isLoading = false
         featuredProducts = Array(products.prefix(6))
