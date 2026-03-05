@@ -22,7 +22,6 @@ struct HeroBannerView: View {
         .frame(height: 200)
         .clipShape(RoundedRectangle(cornerRadius: 24))
         .overlay(alignment: .bottomTrailing) {
-            // Custom page indicator
             HStack(spacing: 6) {
                 ForEach(viewModel.banners.indices, id: \.self) { index in
                     Capsule()
@@ -40,14 +39,11 @@ struct HeroBannerView: View {
 
     private func bannerCard(_ banner: HomeBanner) -> some View {
         ZStack {
-            // Gradient background
             LinearGradient(
                 colors: banner.gradientColors.map { Color(hex: $0) },
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )
-
-            // Glassmorphism circle decorations
             Circle()
                 .fill(Color.white.opacity(0.05))
                 .frame(width: 200, height: 200)
@@ -59,10 +55,9 @@ struct HeroBannerView: View {
                 .frame(width: 150, height: 150)
                 .offset(x: -80, y: 60)
 
-            // Content
             HStack {
                 VStack(alignment: .leading, spacing: 10) {
-                    // Badge
+                   
                     Text(banner.badge)
                         .font(.system(size: 10, weight: .black))
                         .tracking(2)
@@ -84,7 +79,6 @@ struct HeroBannerView: View {
                         .font(.system(size: 13))
                         .foregroundColor(.white.opacity(0.8))
 
-                    // Shop Now button
                     HStack(spacing: 6) {
                         Text("Shop Now")
                             .font(.system(size: 12, weight: .bold))

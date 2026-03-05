@@ -14,7 +14,6 @@ struct FeaturedProductCard: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            // Image container
             ZStack(alignment: .topLeading) {
                 AsyncImage(url: URL(string: product.images.first ?? "")) { phase in
                     switch phase {
@@ -49,7 +48,6 @@ struct FeaturedProductCard: View {
                         .animation(.easeOut, value: imageLoaded)
                 )
 
-                // Discount badge
                 if product.discountPercentage > 0 {
                     Text(String(format: "-%.0f%%", product.discountPercentage))
                         .font(.system(size: 10, weight: .black))
@@ -60,8 +58,7 @@ struct FeaturedProductCard: View {
                         .clipShape(RoundedRectangle(cornerRadius: 6))
                         .padding(10)
                 }
-
-                // Favorite button
+                
                 Button {
                     let item = FavoriteItem(
                         title: product.title,
@@ -89,7 +86,6 @@ struct FeaturedProductCard: View {
                 .padding(10)
             }
 
-            // Info
             VStack(alignment: .leading, spacing: 6) {
                 Text(product.title)
                     .font(.system(size: 13, weight: .semibold))
@@ -108,7 +104,6 @@ struct FeaturedProductCard: View {
                         .foregroundColor(.secondary)
                 }
 
-                // Add to cart
                 Button {
                     let item = CartItem(
                         title: product.title,

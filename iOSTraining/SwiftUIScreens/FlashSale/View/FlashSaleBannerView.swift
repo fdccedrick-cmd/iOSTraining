@@ -34,11 +34,10 @@ struct FlashSaleBannerView: View {
                         .onEnded { value in
                             isDragging = false
                             
-                            // Only update position if actually dragged (not a tap)
                             let dragDistance = sqrt(pow(value.translation.width, 2) + pow(value.translation.height, 2))
                             
                             if dragDistance > 5 {
-                                // It was a drag, update position
+                              
                                 let newX = currentPosition.x + value.translation.width
                                 let newY = currentPosition.y + value.translation.height
 
@@ -54,10 +53,9 @@ struct FlashSaleBannerView: View {
                                 let clampedX = min(max(newX, minX), maxX)
                                 let clampedY = min(max(newY, minY), maxY)
                                 
-                                // Reset drag offset
+                               
                                 draggedOffset = .zero
 
-                                // Snap to sides with animation
                                 withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) {
                                     let midX = screenWidth / 2
                                     let padding: CGFloat = bannerWidth / 2 + 16
@@ -69,7 +67,6 @@ struct FlashSaleBannerView: View {
                                     }
                                 }
                             } else {
-                                // It was a tap, open modal
                                 draggedOffset = .zero
                                 viewModel.showModal = true
                             }

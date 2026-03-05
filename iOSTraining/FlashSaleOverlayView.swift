@@ -12,17 +12,14 @@ struct FlashSaleOverlayView: View {
 
     var body: some View {
         ZStack {
-            // Transparent background that passes through touches
             Color.clear
                 .contentShape(Rectangle())
                 .allowsHitTesting(false)
             
-            // Banner — only its own frame is interactive
             if viewModel.showBanner {
                 FlashSaleBannerView()
             }
-
-            // Modal — full interactive when visible
+            
             if viewModel.showModal {
                 Color.black.opacity(0.4)
                     .ignoresSafeArea()

@@ -12,7 +12,6 @@ class MainTabBarController: UITabBarController {
 
     private var cartObserver: AnyCancellable?
 
-    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViewControllers()
@@ -28,7 +27,6 @@ class MainTabBarController: UITabBarController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        // Setup overlay window once view is on screen
         if overlayWindow == nil {
             setupFlashSaleOverlay()
         }
@@ -42,7 +40,7 @@ class MainTabBarController: UITabBarController {
     }
 
     private func setupFlashSaleOverlay() {
-        // Create a new window for the overlay
+        
         guard let windowScene = view.window?.windowScene else { return }
         
         let overlayWindow = PassthroughWindow(windowScene: windowScene)
@@ -56,7 +54,7 @@ class MainTabBarController: UITabBarController {
         
         self.overlayWindow = overlayWindow
         
-        // Listen for modal state changes to adjust window interaction
+       
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(flashSaleModalStateChanged(_:)),
@@ -67,7 +65,7 @@ class MainTabBarController: UITabBarController {
     
     @objc private func flashSaleModalStateChanged(_ notification: Notification) {
         guard let isShowing = notification.userInfo?["isShowing"] as? Bool else { return }
-        // When modal is showing, bring window to front
+      
         if isShowing {
             overlayWindow?.windowLevel = .normal + 1
         } else {
@@ -75,63 +73,52 @@ class MainTabBarController: UITabBarController {
         }
     }
     
-    // MARK: - PassthroughWindow
     class PassthroughWindow: UIWindow {
         override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-            // Get the hit view from the default implementation
+         
             guard let hitView = super.hitTest(point, with: event) else {
                 return nil
             }
-            
-            // If modal is showing, capture ALL touches - don't pass through anything
+           
             if FlashSaleViewModel.shared.showModal {
                 return hitView
             }
             
-            // Modal is not showing, so we're in passthrough mode for the banner
-            // If we hit the root view controller's view or the window itself, pass through
             if hitView == rootViewController?.view || hitView == self {
                 return nil
             }
-            
-            // Check if the hit view is small enough to be the banner or its content
+        
             let hitWidth = hitView.bounds.width
             let hitHeight = hitView.bounds.height
             
-            // Banner is 160x60, so if we hit something around that size or smaller, capture it
             if hitWidth <= 180 && hitHeight <= 100 {
-                // This is likely the banner or its subviews, capture it
                 return hitView
             }
             
-            // It's a full-screen container, pass through
             return nil
         }
     }
 
 
-    // MARK: - Tab Bar Style
     private func setupTabBarStyle() {
         let appearance = UITabBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = UIColor(white: 0.97, alpha: 1.0)
         appearance.shadowColor = UIColor(white: 0.88, alpha: 1.0)
 
-        // Selected
         appearance.stackedLayoutAppearance.selected.iconColor = .black
         appearance.stackedLayoutAppearance.selected.titleTextAttributes = [
             .foregroundColor: UIColor.black,
             .font: UIFont.systemFont(ofSize: 10, weight: .semibold)
         ]
 
-        // Unselected
         appearance.stackedLayoutAppearance.normal.iconColor = UIColor(white: 0.6, alpha: 1.0)
         appearance.stackedLayoutAppearance.normal.titleTextAttributes = [
             .foregroundColor: UIColor(white: 0.6, alpha: 1.0),
             .font: UIFont.systemFont(ofSize: 10, weight: .regular)
         ]
 
-        // Badge
+    
         appearance.stackedLayoutAppearance.normal.badgeBackgroundColor = .systemRed
         appearance.stackedLayoutAppearance.selected.badgeBackgroundColor = .systemRed
         appearance.stackedLayoutAppearance.normal.badgeTextAttributes = [
@@ -154,7 +141,7 @@ class MainTabBarController: UITabBarController {
         tabBar.layer.masksToBounds = false
     }
 
-    // MARK: - View Controllers
+  
     private func setupViewControllers() {
         
         
@@ -168,7 +155,7 @@ class MainTabBarController: UITabBarController {
             )
         
         
-        // Tab 1 - Products (UIKit)
+   
         let productListVC = ProductListViewController(
             nibName: String(describing: ProductListViewController.self),
             bundle: nil
@@ -179,7 +166,7 @@ class MainTabBarController: UITabBarController {
             image: UIImage(systemName: "square.grid.2x2"), tag: 2
 //            selectedImage: UIImage(systemName: "list.bullet")
         )
-
+ 
         // Tab 2 - Favorites (SwiftUI)
         let favoritesVC = UIHostingController(rootView: FavoritesView())
         favoritesVC.view.backgroundColor = .clear

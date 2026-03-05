@@ -22,7 +22,7 @@ class CartViewModel: ObservableObject {
 
     private let cartKey = "saved_cart_items"
     private let shippingFee: Double = 15.00
-    
+     
     
     init () {
         loadFromUserDefaults()

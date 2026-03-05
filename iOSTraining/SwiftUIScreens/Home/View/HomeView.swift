@@ -31,7 +31,6 @@ struct HomeView: View {
                 .padding(.top, 8)
             }
 
-            // Toast
             if let message = toastMessage {
                 Text("  \(message)  ")
                     .font(.system(size: 14, weight: .medium))
@@ -52,7 +51,6 @@ struct HomeView: View {
         }
     }
 
-    // MARK: - Header
     private var headerSection: some View {
         HStack(alignment: .top) {
             VStack(alignment: .leading, spacing: 4) {
@@ -73,7 +71,6 @@ struct HomeView: View {
 
             Spacer()
 
-            // Notification bell
             ZStack(alignment: .topTrailing) {
                 Button {} label: {
                     Image(systemName: "bell.fill")
@@ -96,7 +93,6 @@ struct HomeView: View {
         .padding(.top, 16)
     }
 
-    // MARK: - Search
     private var searchSection: some View {
         HStack(spacing: 12) {
             HStack(spacing: 10) {
@@ -117,7 +113,6 @@ struct HomeView: View {
                     .stroke(Color(.systemGray4).opacity(0.5), lineWidth: 1)
             )
 
-            // Filter button
             Button {} label: {
                 Image(systemName: "slider.horizontal.3")
                     .font(.system(size: 16))
@@ -129,12 +124,10 @@ struct HomeView: View {
         }
     }
 
-    // MARK: - Hero Banner
     private var heroBannerSection: some View {
         HeroBannerView()
     }
 
-    // MARK: - Categories
     private var categoriesSection: some View {
         VStack(alignment: .leading, spacing: 12) {
             sectionHeader(title: "Categories", action: "See All")
@@ -178,7 +171,6 @@ struct HomeView: View {
         }
     }
 
-    // MARK: - Featured
     private var featuredSection: some View {
         VStack(alignment: .leading, spacing: 12) {
             sectionHeader(title: "Featured", action: "See All")
@@ -208,8 +200,7 @@ struct HomeView: View {
             }
         }
     }
-
-    // MARK: - Trending
+    
     private var trendingSection: some View {
         VStack(alignment: .leading, spacing: 12) {
             sectionHeader(title: "Top Rated", action: "See All")
@@ -223,7 +214,6 @@ struct HomeView: View {
         }
     }
 
-    // MARK: - Skeleton Loading
     private var skeletonGrid: some View {
         LazyVGrid(
             columns: [
@@ -259,8 +249,7 @@ struct HomeView: View {
         .background(Color(.systemBackground))
         .clipShape(RoundedRectangle(cornerRadius: 16))
     }
-
-    // MARK: - Helpers
+    
     private func sectionHeader(title: String, action: String) -> some View {
         HStack {
             Text(title)
@@ -285,7 +274,6 @@ struct HomeView: View {
     }
 }
 
-// MARK: - Shimmer Effect
 struct ShimmerModifier: ViewModifier {
     @State private var phase: CGFloat = 0
 
