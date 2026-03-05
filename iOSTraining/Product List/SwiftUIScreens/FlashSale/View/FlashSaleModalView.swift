@@ -18,49 +18,74 @@ struct FlashSaleModalView: View {
                 .onTapGesture { viewModel.dismissModal() }
 
             VStack(spacing: 0) {
+                // Handle
                 RoundedRectangle(cornerRadius: 3)
                     .fill(Color(.systemGray4))
                     .frame(width: 40, height: 4)
                     .padding(.top, 12)
                     .padding(.bottom, 16)
-                
+
+                // Header
                 HStack {
                     VStack(alignment: .leading, spacing: 4) {
                         HStack(spacing: 6) {
                             Text("⚡️")
                                 .font(.system(size: 20))
-
                             Text("FLASH SALE")
                                 .font(.system(size: 20, weight: .black))
                                 .foregroundColor(Color(hex: "FF4500"))
                                 .tracking(2)
                         }
 
-                        Text("Up to \(String(format: "%.0f%%", viewModel.saleItems.map { $0.product.discountPercentage}.max() ?? 0)) off today only!")
-                            .font(.system(size: 13))
-                            .foregroundColor(.secondary)
+                        // ✅ Sale ends countdown
+                        HStack(spacing: 4) {
+                            Image(systemName: "clock.fill")
+                                .font(.system(size: 11))
+                                .foregroundColor(.secondary)
+                            Text("Ends in")
+                                .font(.system(size: 12))
+                                .foregroundColor(.secondary)
+                            Text(viewModel.formattedSaleTimeRemaining)
+                                .font(.system(size: 12, weight: .bold))
+                                .foregroundColor(Color(hex: "FF4500"))
+                                .monospacedDigit()
+                                .contentTransition(.numericText())
+                        }
                     }
 
                     Spacer()
 
-                    Button {
-                        viewModel.showAllSales = true
-                    } label: {
-                        Text("Show All")
-                            .font(.system(size: 13, weight: .semibold))
-                            .foregroundColor(.white)
-                            .padding(.horizontal, 14)
-                            .padding(.vertical, 7)
-                            .background(Color(hex: "FF4500"))
-                            .clipShape(Capsule())
+                    HStack(spacing: 8) {
+                        // ✅ Minimize to banner
+                        Button {
+                            withAnimation(.spring(response: 0.4)) {
+                                viewModel.dismissModal()
+                            }
+                        } label: {
+                            Image(systemName: "minus.circle.fill")
+                                .font(.system(size: 22))
+                                .foregroundColor(.secondary)
+                        }
+
+                        // Show All
+                        Button {
+                            viewModel.showAllSales = true
+                        } label: {
+                            Text("Show All")
+                                .font(.system(size: 13, weight: .semibold))
+                                .foregroundColor(.white)
+                                .padding(.horizontal, 14)
+                                .padding(.vertical, 7)
+                                .background(Color(hex: "FF4500"))
+                                .clipShape(Capsule())
+                        }
                     }
                 }
                 .padding(.horizontal, 20)
 
-                Divider()
-                    .padding(.vertical, 12)
+                Divider().padding(.vertical, 12)
 
-               
+                // Products Grid
                 ScrollView {
                     LazyVGrid(
                         columns: [
@@ -85,7 +110,7 @@ struct FlashSaleModalView: View {
             .clipShape(RoundedRectangle(cornerRadius: 24))
             .ignoresSafeArea(edges: .bottom)
 
-           
+            // Toast
             if let message = toastMessage {
                 Text("  \(message)  ")
                     .font(.system(size: 14, weight: .medium))
@@ -100,6 +125,12 @@ struct FlashSaleModalView: View {
         }
         .fullScreenCover(isPresented: $viewModel.showAllSales) {
             FlashSaleAllView()
+        }
+        // ✅ Auto dismiss when sale ends
+        .onChange(of: viewModel.state) { state in
+            if state == .saleEnded {
+                viewModel.dismissModal()
+            }
         }
     }
 

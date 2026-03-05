@@ -83,15 +83,25 @@ class ProductDetailViewController: UIViewController {
     @IBAction func didTapAddToCart(_ sender: Any) {
         guard let product = dummyProduct else { return }
         
+        // Check if product is on flash sale
+        let saleInfo = FlashSaleViewModel.shared.getSaleInfo(forProductId: product.id)
+        
         let cartItem = CartItem(
             title: product.title,
-            price: product.price,
+            price: saleInfo.isOnSale ? saleInfo.salePrice! : product.price,
             imageURL: product.images.first ?? "",
             quantity: 1,
-            isSelected: false
+            isSelected: false,
+            isFlashSale: saleInfo.isOnSale,
+            originalPrice: saleInfo.isOnSale ? saleInfo.originalPrice : nil,
+            productId: product.id
         )
         CartViewModel.shared.addItem(cartItem)
-        showToast(message: "\(product.title) added to Cart. ")
+        
+        let message = saleInfo.isOnSale 
+            ? "⚡️ \(product.title) added to Cart with Flash Sale price!"
+            : "\(product.title) added to Cart."
+        showToast(message: message)
     }
     
     

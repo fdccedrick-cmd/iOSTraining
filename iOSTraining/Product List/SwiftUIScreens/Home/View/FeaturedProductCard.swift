@@ -11,6 +11,7 @@ struct FeaturedProductCard: View {
     let product: DummyProduct
     @State private var isPressed = false
     @State private var imageLoaded = false
+    @Binding var selectedProduct: DummyProduct?
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -65,7 +66,8 @@ struct FeaturedProductCard: View {
                         price: product.price,
                         imageURL: product.images.first ?? "",
                         category: product.category,
-                        rating: product.rating
+                        rating: product.rating,
+                        productId: product.id
                     )
                     FavoritesViewModel.shared.addItem(item)
                 } label: {
@@ -105,11 +107,18 @@ struct FeaturedProductCard: View {
                 }
 
                 Button {
+                    // Check if product is on flash sale
+                    let saleInfo = FlashSaleViewModel.shared.getSaleInfo(forProductId: product.id)
+                    
                     let item = CartItem(
                         title: product.title,
-                        price: product.price,
+                        price: saleInfo.isOnSale ? saleInfo.salePrice! : product.price,
                         imageURL: product.images.first ?? "",
-                        quantity: 1
+                        quantity: 1,
+                        isSelected: false,
+                        isFlashSale: saleInfo.isOnSale,
+                        originalPrice: saleInfo.isOnSale ? saleInfo.originalPrice : nil,
+                        productId: product.id
                     )
                     CartViewModel.shared.addItem(item)
                 } label: {
@@ -137,6 +146,7 @@ struct FeaturedProductCard: View {
             withAnimation { isPressed = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 withAnimation { isPressed = false }
+                selectedProduct = product  // ✅ trigger sheet
             }
         }
     }

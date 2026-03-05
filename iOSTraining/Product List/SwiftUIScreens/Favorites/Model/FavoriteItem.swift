@@ -14,6 +14,7 @@ struct FavoriteItem: Identifiable , Codable {
     let imageURL: String
     let category: String
     let rating: Double
+    let productId: Int?  // Add productId for flash sale matching
 
     var formattedPrice: String {
         String(format: "₱%.2f", price)

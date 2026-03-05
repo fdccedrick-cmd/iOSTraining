@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HomeProductRowView: View {
     let product: DummyProduct
+    @Binding var selectedProduct: DummyProduct?
 
     var body: some View {
         HStack(spacing: 14) {
@@ -54,11 +55,18 @@ struct HomeProductRowView: View {
                     .font(.system(size: 14, weight: .bold))
 
                 Button {
+                    // Check if product is on flash sale
+                    let saleInfo = FlashSaleViewModel.shared.getSaleInfo(forProductId: product.id)
+                    
                     let item = CartItem(
                         title: product.title,
-                        price: product.price,
+                        price: saleInfo.isOnSale ? saleInfo.salePrice! : product.price,
                         imageURL: product.images.first ?? "",
-                        quantity: 1
+                        quantity: 1,
+                        isSelected: false,
+                        isFlashSale: saleInfo.isOnSale,
+                        originalPrice: saleInfo.isOnSale ? saleInfo.originalPrice : nil,
+                        productId: product.id
                     )
                     CartViewModel.shared.addItem(item)
                 } label: {
@@ -72,5 +80,8 @@ struct HomeProductRowView: View {
         .background(Color(.systemBackground))
         .clipShape(RoundedRectangle(cornerRadius: 14))
         .shadow(color: .black.opacity(0.04), radius: 4, x: 0, y: 2)
+        .onTapGesture {
+            selectedProduct = product 
+        }
     }
 }

@@ -12,15 +12,34 @@ import SwiftUI
 class HomeViewModel: ObservableObject {
     static let shared = HomeViewModel()
 
+    @Published var allProducts: [DummyProduct] = []
     @Published var featuredProducts: [DummyProduct] = []
     @Published var trendingProducts: [DummyProduct] = []
     @Published var selectedCategory: String = "All"
     @Published var isLoading: Bool = true
     @Published var currentBannerIndex: Int = 0
     @Published var searchText: String = ""
+    @Published var currentSort: SortOption = .featured
+    @Published var isSearchActive: Bool = false
 
+    enum SortOption: String, CaseIterable {
+           case featured      = "Featured"
+           case nameAZ        = "Name (A-Z)"
+           case priceLowHigh  = "Price (Low to High)"
+           case topRated      = "Top Rated"
+
+           var icon: String {
+               switch self {
+               case .featured:     return "sparkles"
+               case .nameAZ:       return "textformat.abc"
+               case .priceLowHigh: return "tag.fill"
+               case .topRated:     return "star.fill"
+               }
+           }
+       }
     private var cancellables = Set<AnyCancellable>()
     private var bannerTimer: AnyCancellable?
+    
 
     let categories: [HomeCategory] = [
         HomeCategory(name: "All", icon: "square.grid.2x2.fill"),
@@ -59,6 +78,44 @@ class HomeViewModel: ObservableObject {
         }
     }
 
+    var isShowingSearchResults: Bool {
+            !searchText.isEmpty
+        }
+        var displayedProducts: [DummyProduct] {
+            var result = allProducts
+
+            // 1. Filter by category
+            if selectedCategory != "All" {
+                result = result.filter {
+                    $0.category.lowercased().contains(selectedCategory.lowercased())
+                }
+            }
+
+            // 2. Filter by search
+            if !searchText.isEmpty {
+                result = result.filter {
+                    $0.title.lowercased().contains(searchText.lowercased()) ||
+                    $0.category.lowercased().contains(searchText.lowercased())
+                }
+            }
+
+            // 3. Apply sort
+            switch currentSort {
+            case .featured:
+                break // original order
+            case .nameAZ:
+                result.sort { $0.title < $1.title }
+            case .priceLowHigh:
+                result.sort { $0.price < $1.price }
+            case .topRated:
+                result.sort { $0.rating > $1.rating }
+            }
+
+            return result
+        }
+
+    var searchResultCount: Int { displayedProducts.count }
+    
     var greeting: String {
         let hour = Calendar.current.component(.hour, from: Date())
         switch hour {
@@ -75,9 +132,20 @@ class HomeViewModel: ObservableObject {
 
     init() {
         startBannerAutoScroll()
+        setupSearchDebounce()
         fetchProducts()
     }
-
+    private func setupSearchDebounce() {
+            $searchText
+                .debounce(for: .milliseconds(300), scheduler: RunLoop.main)
+                .removeDuplicates()
+                .sink { [weak self] _ in
+                    self?.objectWillChange.send()
+                }
+                .store(in: &cancellables)
+        }
+    
+    
     func fetchProducts() {
         isLoading = true
         NetworkManager.shared.fetchProducts { [weak self] result in
@@ -86,6 +154,7 @@ class HomeViewModel: ObservableObject {
 
             switch result {
             case .success(let products):
+                self.allProducts = products
                 self.featuredProducts = Array(products.prefix(6))
                 self.trendingProducts = products.sorted { $0.rating > $1.rating }
 
@@ -96,8 +165,20 @@ class HomeViewModel: ObservableObject {
             }
         }
     }
+    func clearSearch() {
+            searchText = ""
+            isSearchActive = false
+        }
+
+    func applySort(_ sort: SortOption) {
+        withAnimation(.spring(response: 0.3)) {
+            currentSort = sort
+        }
+    }
+    
     func loadProducts(_ products: [DummyProduct]) {
         isLoading = false
+        allProducts = products
         featuredProducts = Array(products.prefix(6))
         trendingProducts = products.sorted { $0.rating > $1.rating }
     }

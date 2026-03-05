@@ -43,12 +43,21 @@ class FavoritesViewModel: ObservableObject {
     }
     
     func addToCart(_ item: FavoriteItem) {
+        // Check if product is on flash sale using productId
+        var saleInfo = (isOnSale: false, salePrice: nil as Double?, originalPrice: nil as Double?)
+        if let productId = item.productId {
+            saleInfo = FlashSaleViewModel.shared.getSaleInfo(forProductId: productId)
+        }
+        
         let cartItem = CartItem(
             title: item.title,
-            price: item.price,
+            price: saleInfo.isOnSale ? saleInfo.salePrice! : item.price,
             imageURL: item.imageURL,
             quantity: 1,
-            isSelected: false
+            isSelected: false,
+            isFlashSale: saleInfo.isOnSale,
+            originalPrice: saleInfo.isOnSale ? saleInfo.originalPrice : nil,
+            productId: item.productId
         )
         
         CartViewModel.shared.addItem(cartItem)

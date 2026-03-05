@@ -38,6 +38,7 @@ struct FlashSaleAllView: View {
 
                     Spacer()
 
+                    // Replace the subtitle in the header with live countdown
                     VStack(spacing: 2) {
                         HStack(spacing: 6) {
                             Text("⚡️")
@@ -47,9 +48,20 @@ struct FlashSaleAllView: View {
                                 .tracking(2)
                         }
 
-                        Text("Up to \(String(format: "%.0f%% off all items", viewModel.saleItems.map { $0.product.discountPercentage}.max() ?? 0)) off selected items ")
-                            .font(.system(size: 12))
-                            .foregroundColor(.secondary)
+                        // ✅ Live sale ends countdown
+                        HStack(spacing: 4) {
+                            Image(systemName: "clock.fill")
+                                .font(.system(size: 10))
+                                .foregroundColor(.secondary)
+                            Text("Ends in")
+                                .font(.system(size: 11))
+                                .foregroundColor(.secondary)
+                            Text(viewModel.formattedSaleTimeRemaining)
+                                .font(.system(size: 11, weight: .bold))
+                                .foregroundColor(Color(hex: "FF4500"))
+                                .monospacedDigit()
+                                .contentTransition(.numericText())
+                        }
                     }
 
                     Spacer()

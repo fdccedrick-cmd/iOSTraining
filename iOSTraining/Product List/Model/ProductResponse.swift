@@ -10,8 +10,8 @@ struct ProductResponse: Decodable {
     let products: [DummyProduct]
 }
 
-struct DummyProduct: Codable {
-//    let id: Int
+struct DummyProduct: Codable, Identifiable{
+    let id: Int
     let title: String
     let price: Double
     let description: String

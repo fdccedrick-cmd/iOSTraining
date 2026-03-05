@@ -70,34 +70,7 @@ class ProductListTableViewCell: UITableViewCell {
         contentView.layer.shadowOffset = CGSize(width: 0, height: 2)
         contentView.layer.shadowRadius = 4
         contentView.backgroundColor = .systemBackground
-        
-        // Add gradient background container behind the image
-//        gradientBackgroundView.translatesAutoresizingMaskIntoConstraints = false
-//        contentView.insertSubview(gradientBackgroundView, at: 0)
-//        
-//        NSLayoutConstraint.activate([
-//            gradientBackgroundView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-//            gradientBackgroundView.topAnchor.constraint(equalTo: contentView.topAnchor),
-//            gradientBackgroundView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-//            gradientBackgroundView.widthAnchor.constraint(equalToConstant: 120)
-//        ])
-//        
-//        // Create green-to-teal gradient layer
-//        if imageBackgroundGradient == nil {
-//            let gradient = CAGradientLayer()
-//            // Green (#10B981) to Teal (#14B8A6) gradient
-//            gradient.colors = [
-//                UIColor(red: 16/255, green: 185/255, blue: 129/255, alpha: 1.0).cgColor,
-//                UIColor(red: 20/255, green: 184/255, blue: 166/255, alpha: 1.0).cgColor
-//            ]
-//            gradient.startPoint = CGPoint(x: 0, y: 0)
-//            gradient.endPoint = CGPoint(x: 1, y: 1)
-//            gradient.frame = CGRect(x: 0, y: 0, width: 120, height: contentView.bounds.height)
-//            gradient.cornerRadius = 12
-//            gradient.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner] // Only round left corners
-//            gradientBackgroundView.layer.addSublayer(gradient)
-//            imageBackgroundGradient = gradient
-//        }
+
         
         // Image styling - rounded square with gradient overlay
         productImageView.layer.cornerRadius = 12

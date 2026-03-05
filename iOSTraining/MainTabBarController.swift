@@ -16,7 +16,7 @@ class MainTabBarController: UITabBarController {
         super.viewDidLoad()
         setupViewControllers()
         setupTabBarStyle()
-        setupBadgeObservers()
+//        setupBadgeObservers()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -75,26 +75,16 @@ class MainTabBarController: UITabBarController {
     
     class PassthroughWindow: UIWindow {
         override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-         
             guard let hitView = super.hitTest(point, with: event) else {
                 return nil
             }
            
+            // Modal is showing - capture all touches
             if FlashSaleViewModel.shared.showModal {
                 return hitView
             }
             
-            if hitView == rootViewController?.view || hitView == self {
-                return nil
-            }
-        
-            let hitWidth = hitView.bounds.width
-            let hitHeight = hitView.bounds.height
-            
-            if hitWidth <= 180 && hitHeight <= 100 {
-                return hitView
-            }
-            
+            // No modal - pass through to main app
             return nil
         }
     }
@@ -153,8 +143,6 @@ class MainTabBarController: UITabBarController {
             image: UIImage(systemName: "house"),
             tag: 1
             )
-        
-        
    
         let productListVC = ProductListViewController(
             nibName: String(describing: ProductListViewController.self),

@@ -38,10 +38,33 @@ struct CartRowView: View {
                 // Info
                 VStack(alignment: .leading, spacing: 4) {
                     HStack(alignment: .top) {
-                        Text(item.title)
-                            .font(.system(size: 16, weight: .semibold))
-                            .foregroundColor(.primary)
-                            .lineLimit(2)
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(item.title)
+                                .font(.system(size: 16, weight: .semibold))
+                                .foregroundColor(.primary)
+                                .lineLimit(2)
+                            
+                            // Flash Sale Badge
+                            if item.isFlashSale {
+                                HStack(spacing: 4) {
+                                    Image(systemName: "bolt.fill")
+                                        .font(.system(size: 9))
+                                    Text("FLASH SALE")
+                                        .font(.system(size: 10, weight: .bold))
+                                }
+                                .foregroundColor(.white)
+                                .padding(.horizontal, 8)
+                                .padding(.vertical, 4)
+                                .background(
+                                    LinearGradient(
+                                        colors: [Color(red: 1.0, green: 0.27, blue: 0.0), Color(red: 1.0, green: 0.42, blue: 0.0)],
+                                        startPoint: .leading,
+                                        endPoint: .trailing
+                                    )
+                                )
+                                .clipShape(Capsule())
+                            }
+                        }
                         
                         Spacer()
                         
@@ -62,9 +85,23 @@ struct CartRowView: View {
                     
                     Spacer()
                     
-                    Text(item.formattedPrice)
-                        .font(.system(size: 18, weight: .bold))
-                        .foregroundStyle(Color.primary)
+                    // Price with strikethrough for flash sale items
+                    if item.isFlashSale, let originalPrice = item.formattedOriginalPrice {
+                        HStack(spacing: 8) {
+                            Text(item.formattedPrice)
+                                .font(.system(size: 18, weight: .bold))
+                                .foregroundStyle(Color(red: 1.0, green: 0.27, blue: 0.0))
+                            
+                            Text(originalPrice)
+                                .font(.system(size: 14, weight: .medium))
+                                .foregroundColor(.secondary)
+                                .strikethrough(true, color: .secondary)
+                        }
+                    } else {
+                        Text(item.formattedPrice)
+                            .font(.system(size: 18, weight: .bold))
+                            .foregroundStyle(Color.primary)
+                    }
                     
                     Spacer()
                     

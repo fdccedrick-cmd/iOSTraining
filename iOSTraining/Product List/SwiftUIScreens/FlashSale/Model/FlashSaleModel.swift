@@ -9,9 +9,16 @@ import Foundation
 
 
 enum FlashSaleConfig {
-    static let saleDurationSeconds: TimeInterval = 1 * 60
+    static let saleDurationSeconds: TimeInterval = 30 * 69
+    static let countdownToSaleSeconds: TimeInterval = 10
     static let saleLabel: String = "FLASH SALE"
     static let bannerEmoji: String = "⚡️"
+}
+
+enum FlashSaleState {
+    case countingDown
+    case saleActive
+    case saleEnded
 }
 
 

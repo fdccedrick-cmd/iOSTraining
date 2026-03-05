@@ -310,16 +310,25 @@ extension ProductListViewController: UISearchBarDelegate {
                 ? self.filteredDummyProducts[indexPath.row]
                 : self.dummyProducts[indexPath.row]
 
+            // Check if product is on flash sale
+            let saleInfo = FlashSaleViewModel.shared.getSaleInfo(forProductId: product.id)
+            
             let cartItem = CartItem(
                 title: product.title,
-                price: product.price,
+                price: saleInfo.isOnSale ? saleInfo.salePrice! : product.price,
                 imageURL: product.images.first ?? "",
                 quantity: 1,
-                isSelected: false
+                isSelected: false,
+                isFlashSale: saleInfo.isOnSale,
+                originalPrice: saleInfo.isOnSale ? saleInfo.originalPrice : nil,
+                productId: product.id
             )
             CartViewModel.shared.addItem(cartItem)
 
-            self.showAutoDismissAlert(message: "🛒 \(product.title) added to cart")
+            let message = saleInfo.isOnSale 
+                ? "⚡️ \(product.title) added with Flash Sale price!"
+                : "🛒 \(product.title) added to cart"
+            self.showAutoDismissAlert(message: message)
             completion(true)
         }
 
@@ -343,7 +352,8 @@ extension ProductListViewController: UISearchBarDelegate {
                 price: product.price,
                 imageURL: product.images.first ?? "",
                 category: product.category,
-                rating: product.rating
+                rating: product.rating,
+                productId: product.id
             )
             FavoritesViewModel.shared.addItem(favoriteItem)
             self.showAutoDismissAlert(message: "🛒 \(product.title) added to favorites")
