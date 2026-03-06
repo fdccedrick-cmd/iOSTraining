@@ -12,20 +12,16 @@ import UIKit
 class AuthViewModel: ObservableObject {
     static let shared = AuthViewModel()
 
-    // Login
     @Published var loginEmail: String = ""
     @Published var loginPassword: String = ""
     @Published var loginError: String? = nil
     @Published var isLoginLoading: Bool = false
     @Published var isLoggedIn: Bool = false
-
-    // MARK: - Shared
     @Published var showPassword: Bool = false
     @Published var showConfirmPassword: Bool = false
 
     private var cancellables = Set<AnyCancellable>()
 
-    // MARK: - Login
     func login() {
         loginError = nil
 
@@ -38,7 +34,6 @@ class AuthViewModel: ObservableObject {
 
         isLoginLoading = true
 
-        // Simulate API call
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
             self.isLoginLoading = false
             UserDefaults.standard.set(self.loginEmail, forKey: "email")
@@ -51,7 +46,6 @@ class AuthViewModel: ObservableObject {
         }
     }
 
-    // MARK: - Logout
     func logout() {
         UserDefaults.standard.set(false, forKey: "isLoggedIn")
         UserDefaults.standard.removeObject(forKey: "email")
@@ -61,7 +55,6 @@ class AuthViewModel: ObservableObject {
         loginPassword = ""
     }
 
-    // MARK: - Validate
     private func validate(email: String, password: String) throws {
         guard !email.isEmpty else { throw AuthError.emptyEmail }
         guard email.contains("@") && email.contains(".") else { throw AuthError.invalidEmail }

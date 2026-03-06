@@ -17,7 +17,6 @@ struct ProductDetailRepresentable: UIViewControllerRepresentable {
             bundle: nil
         )
         vc.dummyProduct = product
-        // ✅ Wrap in nav so back button works
         let nav = UINavigationController(rootViewController: vc)
         nav.navigationBar.tintColor = .systemTeal
         return nav

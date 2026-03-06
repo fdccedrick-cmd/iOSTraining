@@ -14,9 +14,9 @@ struct CartItem: Identifiable, Codable {
     let imageURL: String
     var quantity: Int
     var isSelected: Bool = false
-    var isFlashSale: Bool = false  // Track if this is a flash sale item
-    var originalPrice: Double?  // Original price before discount
-    var productId: Int?  // Product ID for matching with sale items
+    var isFlashSale: Bool = false
+    var originalPrice: Double?
+    var productId: Int? 
     
     var formattedPrice: String {
         String(format: "₱%.2f", price)

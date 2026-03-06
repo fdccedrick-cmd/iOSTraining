@@ -17,25 +17,18 @@ struct LoginView: View {
            Color(.systemGray6).ignoresSafeArea()
 
            VStack(spacing: 0) {
-               // Logo
                logoView
                    .padding(.top, 60)
 
                Spacer()
-
-               // Welcome Text
                welcomeText
                    .padding(.horizontal, 28)
 
                Spacer()
-
-               // Form
                formView
                    .padding(.horizontal, 28)
 
                Spacer()
-
-               // Sign In Button
                signInButton
                    .padding(.horizontal, 28)
 
@@ -46,7 +39,7 @@ struct LoginView: View {
        }
                
 }
-    // MARK: - Logo
+
         private var logoView: some View {
             VStack(spacing: 10) {
                 ZStack {
@@ -67,7 +60,7 @@ struct LoginView: View {
             }
         }
 
-        // MARK: - Welcome Text
+      
         private var welcomeText: some View {
             VStack(alignment: .leading, spacing: 0) {
                 Text("Welcome")
@@ -82,7 +75,7 @@ struct LoginView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
         }
 
-        // MARK: - Form
+       
         private var formView: some View {
             VStack(spacing: 28) {
                 // Email
@@ -157,7 +150,6 @@ struct LoginView: View {
             }
         }
 
-        // MARK: - Sign In Button
         private var signInButton: some View {
             Button(action: viewModel.login) {
                 HStack {

@@ -12,7 +12,6 @@ struct FlashSaleOverlayView: View {
 
     var body: some View {
         ZStack {
-            // ✅ Only show modal, no floating banner
             if viewModel.showModal {
                 Color.black.opacity(0.4)
                     .ignoresSafeArea()
@@ -36,6 +35,6 @@ struct FlashSaleOverlayView: View {
             }
         }
         .ignoresSafeArea()
-        .allowsHitTesting(viewModel.showModal)  // Only intercept when modal is visible
+        .allowsHitTesting(viewModel.showModal)
     }
 }

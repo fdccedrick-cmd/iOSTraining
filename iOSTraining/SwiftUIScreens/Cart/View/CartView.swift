@@ -40,7 +40,6 @@ struct CartView: View {
         }
     }
 
-    // MARK: - Header
     private var cartHeaderView: some View {
         HStack {
             Text("Your Cart")
@@ -67,7 +66,6 @@ struct CartView: View {
         .padding(.top, 8)
     }
     
-    // MARK: - Select All
     private var selectAllView: some View {
         HStack {
             Button {
@@ -93,7 +91,6 @@ struct CartView: View {
         .padding(.horizontal, 4)
     }
 
-    // MARK: - Cart Items Card
     private var cartItemsCard: some View {
         VStack(spacing: 0) {
             ForEach(viewModel.items.indices, id: \.self) { index in

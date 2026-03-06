@@ -152,7 +152,6 @@ class MainTabBarController: UITabBarController {
         productsNav.tabBarItem = UITabBarItem(
             title: "Products",
             image: UIImage(systemName: "square.grid.2x2"), tag: 2
-//            selectedImage: UIImage(systemName: "list.bullet")
         )
  
         // Tab 2 - Favorites (SwiftUI)
@@ -187,7 +186,6 @@ class MainTabBarController: UITabBarController {
         viewControllers = [homeNav, productsNav, favoritesNav, cartVC, profileNav]
     }
 
-    // MARK: - Badge Observers
     private func setupBadgeObservers() {
         // Cart badge
         cartObserver = CartViewModel.shared.$items
